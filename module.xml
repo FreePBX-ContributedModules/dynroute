@@ -1,0 +1,24 @@
+<module>
+	<rawname>dynroute</rawname>
+	<name>Dynamic Routes</name>
+	<version>2.6.0.2</version>
+	<publisher>FreePBX</publisher>
+	<license>GPLv2+</license>
+	<type>setup</type>
+	<category>Inbound Call Control</category>
+	<description>
+		Allows to reoute call based on lookup in sql database
+	</description>
+	<changelog>
+		*2.6.0.2* First Release
+	</changelog>
+	<depends>
+		<version></version>
+		<module></module>
+	</depends>
+	<menuitems>
+		<dynroute>Dynamic Routes</dynroute>
+	</menuitems>
+	<location>release/2.6/dynroute-2.6.0.2.tgz</location>
+	<md5sum></md5sum>
+</module>
