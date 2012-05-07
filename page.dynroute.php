@@ -16,6 +16,7 @@ switch ($action) {
 		// Set the defaults
 		dynroute_sidebar($id);
 		dynroute_show_edit($id, 3,  $def);
+		$def['timeout']=5;
 		break;
 	case "edit":
 		dynroute_sidebar($id);
@@ -48,11 +49,19 @@ switch ($action) {
 <h2><?php echo _("Routing"); ?></h2>
 <h3><?php 
 echo _("Instructions")."</h3>";
-echo _("You use the Dynamic Routing module to route calls based on sql lookup.")."<br />\n";
-echo _("You need to specify hostname, database name, username and password for mysql server.")."<br />\n";
-echo _("In the query you can use the special string [NUMBER] to be substituted by the incoming callerid number.")."\n"; 
+echo _("You use the Dynamic Routing module to route calls based on sql lookup.")."\n";
+echo _("It is also possible to request user input (dtmf) and then use that in the query too.")."\n";
+echo _("Optionally an announcement can be played before reading dtmf.")."\n";
+echo _("You need to specify hostname, database name, username and password for mysql server.")."\n";
+echo _("In the query you can use the special string [NUMBER] to be substituted by the incoming callerid number")."\n"; 
+echo _("or the special string [INPUT] to be substituted by the captured dtmf.")."\n"; 
 echo _("The selected field returned from the query is matched against the options text to decide which destination to use.")."\n"; 
-echo _("You should define an option named default which will be used if no match is found. If you do not the call will be hang up on no match.")."\n"; ?>
+echo _("Optionally you may define variable names in order to capture the dtmf input and / or query result. Those variables may")."\n"; 
+echo _("be used later on a further pass through a dynroute inside the query string be enclosing in [] or in custom destinations.")."\n"; 
+echo _("When refering to the variables in custom destinations (typically to pass to an agi script) DYNROUTE_ is prefixed to the variable name.")."\n"; 
+echo _("You should define an option named default which will be used if no match is found. If you do not the call will be hang up on no match.")."\n"; 
+echo _("If you have defined a default option you may also omit the mysql hostname and other parameters in order to bypass a query and")."\n";
+echo _("procede with the default action. This is useful if you only want to capture dtmf into a variable without a mysql lookup.")."\n"; ?>
 </div>
 
 <?php
@@ -109,6 +118,55 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 			<td><a href="#" class="info"><?php echo _("Change Name"); ?><span><?php echo _("This changes the short name, visible on the right, of this Route");?></span></a></td>
 			<td><input type="text" name="displayname" value="<?php echo $dynroute_details['displayname'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
+                <tr>
+                        <td><a href="#" class="info"><?php echo _("Get DTMF input");?><span><?php echo _("If checked reads in DTMF digis, the value is available in the sql query with special name of [INPUT].");?></span></a></td>
+                        <td><input type="checkbox" name="enable_dtmf_input" <?php echo $dynroute_details['enable_dtmf_input'] ?> tabindex="<?php echo ++$tabindex;?>"></td>
+                </tr>
+                <tr>
+                        <td><a href="#" class="info"><?php echo _("Timeout");?><span><?php echo _("The amount of time (in seconds) to wait for input");?></span></a></td>
+                        <td><input type="text" name="timeout" value="<?php echo $dynroute_details['timeout'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+                </tr>
+                <tr>
+                        <td><a href="#" class="info"><?php echo _("Input Variable");?><span><?php echo _("Optional variable name if you want the dmtf input to be available later in the call (e.g. futher dynamic route query or to pass to agi script)");?></span></a></td>
+                        <td><input type="text" name="chan_var_name" value="<?php echo $dynroute_details['chan_var_name'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+                </tr>
+ 
+<?php
+        $annmsg_id = isset($dynroute_details['announcement_id'])?$dynroute_details['announcement_id']:'';
+        if(function_exists('recordings_list')) { //only include if recordings is enabled ?>
+                <tr>
+                        <td><a href="#" class="info"><?php echo _("Announcement")?><span><?php echo _("Message to be played to the caller. To add additional recordings please use the \"System Recordings\" MENU to the left")?></span></a></td>
+                        <td>
+                                <select name="annmsg_id" tabindex="<?php echo ++$tabindex;?>">
+                                <?php
+                                        $tresults = recordings_list();
+                                        echo '<option value="">'._("None")."</option>";
+                                        if (isset($tresults[0])) {
+                                                foreach ($tresults as $tresult) {
+                                                        echo '<option value="'.$tresult['id'].'"'.($tresult['id'] == $annmsg_id ? ' SELECTED' : '').'>'.$tresult['displayname']."</option>\n";
+                                                }
+                                        }
+                                ?>
+                                </select>
+                        </td>
+                </tr>
+
+<?php
+        } else {
+?>
+                <tr>
+                        <td><a href="#" class="info"><?php echo _("Announcement")?><span><?php echo _("Message to be played to the caller.<br><br>You must install and enable the \"Systems Recordings\" Module to edit this option")?></span></a></td>
+                        <td>
+                        <?php
+                                $default = (isset($annmsg_id) ? $annmsg_id : '');
+                        ?>
+                                <input type="hidden" name="annmsg_id" value="<?php echo $default; ?>"><?php echo ($default != '' ? $default : 'None'); ?>
+                        </td>
+                </tr>
+<?php
+        }
+?>
+
 		<tr>
 			<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Query");?></span></a></td>
 			<td><input type="text" name="mysql_host" value="<?php echo $dynroute_details['mysql_host'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
@@ -129,6 +187,10 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 			<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("Query");?></span></a></td>
 			<td><input type="text" name="mysql_query" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
+                <tr>
+                        <td><a href="#" class="info"><?php echo _("Result Variable");?><span><?php echo _("Optional variable name if you want the query result to be available later in the call (e.g. futher dynamic route query or to pass to agi script)");?></span></a></td>
+                        <td><input type="text" name="chan_var_name_res" value="<?php echo $dynroute_details['chan_var_name_res'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+                </tr>
 		<tr><td colspan=2><hr /></td></tr>
 		<tr><td colspan=2>
 

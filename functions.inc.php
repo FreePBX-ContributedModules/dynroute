@@ -76,6 +76,23 @@ function dynroute_getdestinfo($dest) {
 		return false;
 	}
 }
+function dynroute_recordings_usage($recording_id) {
+        global $active_modules;
+
+        $results = sql("SELECT `dynroute_id`, `displayname` FROM `dynroute` WHERE `announcement_id` = '$recording_id'","getAll",DB_FETCHMODE_ASSOC);
+        if (empty($results)) {
+                return array();
+        } else {
+                //$type = isset($active_modules['dynroute']['type'])?$active_modules['dynroute']['type']:'setup';
+                foreach ($results as $result) {
+                        $usage_arr[] = array(
+                                'url_query' => 'config.php?display=dynroute&action=edit&id='.urlencode($result['dynroute_id']),
+                                'description' => sprintf(_("Dynamic route: %s"),$result['displayname']),
+                        );
+                }
+                return $usage_arr;
+        }
+}
 
 function dynroute_get_config($engine) {
         global $ext;
@@ -107,13 +124,31 @@ function dynroute_get_config($engine) {
 						$query = $item['mysql_query'];
 					}
                                         $query = str_replace('[NUMBER]', '${CALLERID(num)}', $query);
-
-                                        $ext->add($id, 's', '', new ext_mysql_connect('connid', $item['mysql_host'],  $item['mysql_username'],  $item['mysql_password'],  $item['mysql_dbname']));
-                                        $ext->add($id, 's', '', new ext_mysql_query('resultid', 'connid', $query));
-                                        $ext->add($id, 's', '', new ext_mysql_fetch('fetchid', 'resultid', 'ivr')); 
-                                        $ext->add($id, 's', '', new ext_mysql_clear('resultid'));                            
-                                        $ext->add($id, 's', '', new ext_mysql_disconnect('connid'));
-					$ext->add($id, 's', '', new ext_gotoif('$[${fetchid} = 0]',$id.',1,1'));
+                                        $query = str_replace('[INPUT]', '${dtmfinput}', $query);
+					$query = preg_replace('/\[([^\]]*)\]/','${DYNROUTE_$1}',$query);
+					$announcement_id = (isset($details['announcement_id']) ? $details['announcement_id'] : '');
+					if ($item['enable_dtmf_input']=='CHECKED')
+					{
+                                        	if ($announcement_id) {
+                                              		$announcement_msg = recordings_get_file($announcement_id);
+                                        	} else {
+							$announcement_msg = '';
+                                        	}	
+						$ext->add($id, 's', '', new ext_read('dtmfinput',$announcement_msg,'','','',$item['timeout']));
+						if ($item['chan_var_name'] != '')
+							$ext->add($id, 's', '', new ext_setvar('__DYNROUTE_'.$item['chan_var_name'], '${dtmfinput}'));
+                                        }
+					if ($item['mysql_host']!='')
+					{
+                                        	$ext->add($id, 's', '', new ext_mysql_connect('connid', $item['mysql_host'],  $item['mysql_username'],  $item['mysql_password'],  $item['mysql_dbname']));
+                                        	$ext->add($id, 's', '', new ext_mysql_query('resultid', 'connid', $query));
+                                        	$ext->add($id, 's', '', new ext_mysql_fetch('fetchid', 'resultid', 'dynroute')); 
+                                        	$ext->add($id, 's', '', new ext_mysql_clear('resultid'));                            
+                                        	$ext->add($id, 's', '', new ext_mysql_disconnect('connid'));
+						if ($item['chan_var_name_res'] != '')
+							$ext->add($id, 's', '', new ext_setvar('__DYNROUTE_'.$item['chan_var_name_res'], '${dynroute}'));
+						$ext->add($id, 's', '', new ext_gotoif('$[${fetchid} = 0]',$id.',1,1'));
+                                        }
 					$dests = dynroute_get_dests($item['dynroute_id']);
 					if (!empty($dests)) {
 						$default_dest='';
@@ -121,7 +156,7 @@ function dynroute_get_config($engine) {
 							if ($dest['selection'] == 'default') {
 							 	$default_dest=$dest['dest'];
 							} else {
-								$ext->add($id, 's', '', new ext_gotoif('$["${ivr}" = "'.$dest['selection'].'"]',$dest['dest']));
+								$ext->add($id, 's', '', new ext_gotoif('$["${dynroute}" = "'.$dest['selection'].'"]',$dest['dest']));
 							}
 						}
 					}
@@ -162,14 +197,23 @@ function dynroute_add_command($id, $cmd, $dest) {
 }
 function dynroute_do_edit($id, $post) {
 	global $db;
-
         $displayname = $db->escapeSimple($post['displayname']);
         $mysql_host = $db->escapeSimple($post['mysql_host']);
         $mysql_dbname = $db->escapeSimple($post['mysql_dbname']);
         $mysql_query = $db->escapeSimple($post['mysql_query']);
         $mysql_username = $db->escapeSimple($post['mysql_username']);
         $mysql_password = $db->escapeSimple($post['mysql_password']);
+        $annmsg_id = isset($post['annmsg_id'])?$post['annmsg_id']:'';
+        $enable_dtmf_input = isset($post['enable_dtmf_input'])?$post['enable_dtmf_input']:'';
 
+        if (!empty($enable_dtmf_input)) {
+                $enable_dtmf_input='CHECKED';
+        }
+        $timeout = isset($post['timeout'])?$post['timeout']:'';
+        $chan_var_name = isset($post['chan_var_name'])?$post['chan_var_name']:'';
+        $chan_var_name_res = isset($post['chan_var_name_res'])?$post['chan_var_name_res']:'';
+
+ 
 	
 	$sql = "
 	UPDATE dynroute 
@@ -180,7 +224,12 @@ function dynroute_do_edit($id, $post) {
 		mysql_dbname='$mysql_dbname', 
 		mysql_username='$mysql_username', 
 		mysql_password='$mysql_password', 
-		mysql_query='$mysql_query' 
+		mysql_query='$mysql_query',
+		announcement_id='$annmsg_id',  
+		enable_dtmf_input='$enable_dtmf_input',  
+		timeout='$timeout',  
+		chan_var_name='$chan_var_name',  
+		chan_var_name_res='$chan_var_name_res'  
 	WHERE dynroute_id='$id'
 	";
 	sql($sql);
