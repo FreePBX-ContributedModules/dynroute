@@ -168,24 +168,24 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 ?>
 
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Query");?></span></a></td>
-			<td><input type="text" name="mysql_host" value="<?php echo $dynroute_details['mysql_host'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+			<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Host where database to check is located");?></span></a></td>
+			<td><input type="text" iname="mysql_host" value="<?php echo $dynroute_details['mysql_host'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Database");?><span><?php echo _("Query");?></span></a></td>
+			<td><a href="#" class="info"><?php echo _("Database");?><span><?php echo _("Database name");?></span></a></td>
 			<td><input type="text" name="mysql_dbname" value="<?php echo $dynroute_details['mysql_dbname'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Username");?><span><?php echo _("Query");?></span></a></td>
+			<td><a href="#" class="info"><?php echo _("Username");?><span><?php echo _("Username for mysql database");?></span></a></td>
 			<td><input type="text" name="mysql_username" value="<?php echo $dynroute_details['mysql_username'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Password");?><span><?php echo _("Query");?></span></a></td>
+			<td><a href="#" class="info"><?php echo _("Password");?><span><?php echo _("Password for username above");?></span></a></td>
 			<td><input type="text" name="mysql_password" value="<?php echo $dynroute_details['mysql_password'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("Query");?></span></a></td>
-			<td><input type="text" name="mysql_query" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+			<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("Query to execute");?></span></a></td>
+			<td><input type="text" name="mysql_query" size="100" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
                 <tr>
                         <td><a href="#" class="info"><?php echo _("Result Variable");?><span><?php echo _("Optional variable name if you want the query result to be available later in the call (e.g. futher dynamic route query or to pass to agi script)");?></span></a></td>
