@@ -2,6 +2,9 @@
 // Dynamic routing modules
 // Copied from ivr and calleridlookup modules
 // John Fawcett Sept 2009
+
+if (!defined('FREEPBX_IS_AUTH')) { die('No direct script access allowed'); }
+
 require_once dirname(__FILE__)."/functions.inc.php";
 
 if (! function_exists("out")) {
@@ -99,4 +102,3 @@ if(DB::IsError($check)) {
 //
 dynroute_init();
 
-?>
