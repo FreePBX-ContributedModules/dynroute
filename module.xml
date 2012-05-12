@@ -17,12 +17,12 @@
 		*2.6.0.2* First Release
 	</changelog>
 	<depends>
-		<version></version>
+		<version>ge2.10</version>
 		<module></module>
 	</depends>
 	<menuitems>
 		<dynroute>Dynamic Routes</dynroute>
 	</menuitems>
-	<location>release/2.10/dynroute-2.10.0.1.tgz</location>
+	<location>contributed_modules/release/dynroute-2.10.0.1.tgz</location>
 	<md5sum></md5sum>
 </module>
