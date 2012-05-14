@@ -126,6 +126,7 @@ function dynroute_get_config($engine) {
 					}
                                         $query = str_replace('[NUMBER]', '${CALLERID(num)}', $query);
                                         $query = str_replace('[INPUT]', '${dtmfinput}', $query);
+                                        $query = str_replace('[DID]', '${FROM_DID}', $query);
 					$query = preg_replace('/\[([^\]]*)\]/','${DYNROUTE_$1}',$query);
 					$announcement_id = (isset($details['announcement_id']) ? $details['announcement_id'] : '');
 					if ($item['enable_dtmf_input']=='CHECKED')
@@ -142,6 +143,7 @@ function dynroute_get_config($engine) {
 					if ($item['mysql_host']!='')
 					{
                                         	$ext->add($id, 's', '', new ext_mysql_connect('connid', $item['mysql_host'],  $item['mysql_username'],  $item['mysql_password'],  $item['mysql_dbname']));
+						$ext->add($id, 's', '', new ext_gotoif('$["${connid}" = ""]',$id.',1,1'));
                                         	$ext->add($id, 's', '', new ext_mysql_query('resultid', 'connid', $query));
                                         	$ext->add($id, 's', '', new ext_mysql_fetch('fetchid', 'resultid', 'dynroute')); 
                                         	$ext->add($id, 's', '', new ext_mysql_clear('resultid'));                            
