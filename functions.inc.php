@@ -142,6 +142,7 @@ function dynroute_get_config($engine) {
                                         }
 					if ($item['mysql_host']!='')
 					{
+						$ext->add($id, 's', '', new ext_setvar('connid', '""'));
                                         	$ext->add($id, 's', '', new ext_mysql_connect('connid', $item['mysql_host'],  $item['mysql_username'],  $item['mysql_password'],  $item['mysql_dbname']));
 						$ext->add($id, 's', '', new ext_gotoif('$["${connid}" = ""]',$id.',1,1'));
                                         	$ext->add($id, 's', '', new ext_mysql_query('resultid', 'connid', $query));
