@@ -218,7 +218,7 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 					</tr>
 					<tr>
 						<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("The query wich gets the result out of the database");?></span></a></td>
-						<td><input type="text" name="mysql_query" size="100" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+						<td><input type="text" name="mysql_query" size="50" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         </tr>
                                         <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
 				</table>
