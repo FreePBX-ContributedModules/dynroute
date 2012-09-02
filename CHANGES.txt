@@ -1,9 +1,11 @@
 2012 09 02
+*2.10.0.2* released 
 	- Correct a typo in page.dynroute.php which stopped database server hostname from being saved.
 	- Update some strings to make the meaning of the fields clearer
 	- Added script to create pot file and recreated dynroute.pot
 	- Added Dutch translations thanks to Domé Giuliano
 	- Removed obsolete function localrunModuleSQL (originally copied from ivr when dynroute modules was created)
+	- Added example.sql for creating a routing database and table
 
 2012 05 14
 	- Goto default destination iff database connection not established
