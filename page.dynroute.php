@@ -169,6 +169,9 @@ function dynroute_show_edit($id, $nbroptions, $post) {
         }
 ?>
 		<tr>
+	                <td><a href="#" class="info"><?php echo _("Source type")?><span><?php echo _("Select the source type, you can choose between:<ul><li>MySQL: It queries a MySQL database to retrieve the routing information</li><li>ODBC: It queries an ODBC data source to retrieve the routing information</li></ul>")?></span></a></td>
+        	        <td>
+
 			<td>
                         <select id="sourcetype" name="sourcetype" onChange="javascript:displaySourceParameters(this, this.selectedIndex)" tabindex="<?php echo ++$tabindex;?>">
                                 <option value="mysql" <?php echo ($dynroute_details['sourcetype'] == 'mysql' ? 'selected' : '')?>>MySQL</option>
@@ -176,6 +179,22 @@ function dynroute_show_edit($id, $nbroptions, $post) {
                         </select>
 			</td>
 		</tr>
+		<tr>
+	               <td colspan="2">
+                       <div id="odbc" style="display: none">
+                                <table cellpadding="2" cellspacing="0" width="100%">
+
+                                        <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
+
+                                        <tr>
+                                                <td width="50%"><a href="#" class="info"><?php echo _("Odbc data source name")?><span><?php echo _("Name of the odbc datasource given in odbc.ini")?></span></a></td>
+                                                <td><input type="text" name="odbc_name" value="<?php echo (isset($dynroute_details['odbc_name']) ? $dynroute_details['odbc_name'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+                                        </tr>
+				</table>
+			</div>
+		</tr>
+
+
 
 		<tr>
 			<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Hostname or IP address of the server running the MySQL database");?></span></a></td>
