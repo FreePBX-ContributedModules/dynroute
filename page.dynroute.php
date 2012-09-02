@@ -170,7 +170,6 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 ?>
 		<tr>
 	                <td><a href="#" class="info"><?php echo _("Source type")?><span><?php echo _("Select the source type, you can choose between:<ul><li>MySQL: It queries a MySQL database to retrieve the routing information</li><li>ODBC: It queries an ODBC data source to retrieve the routing information</li></ul>")?></span></a></td>
-        	        <td>
 
 			<td>
                         <select id="sourcetype" name="sourcetype" onChange="javascript:displaySourceParameters(this, this.selectedIndex)" tabindex="<?php echo ++$tabindex;?>">
