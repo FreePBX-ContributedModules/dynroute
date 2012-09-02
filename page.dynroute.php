@@ -183,12 +183,11 @@ function dynroute_show_edit($id, $nbroptions, $post) {
                        <div id="odbc" style="display: none">
                                 <table cellpadding="2" cellspacing="0" width="100%">
                                         <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
-				</table>
-                                <table cellpadding="2" cellspacing="0">
                                         <tr>
-                                                <td width="50%"><a href="#" class="info"><?php echo _("Odbc data source name")?><span><?php echo _("Name of the odbc datasource given in odbc.ini")?></span></a></td>
+                                                <td><a href="#" class="info"><?php echo _("Odbc data source name")?><span><?php echo _("Name of the odbc datasource given in odbc.ini")?></span></a></td>
                                                 <td><input type="text" name="odbc_name" value="<?php echo (isset($dynroute_details['odbc_name']) ? $dynroute_details['odbc_name'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         </tr>
+                                        <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
 				</table>
 			</div>
 			</td>
@@ -201,9 +200,6 @@ function dynroute_show_edit($id, $nbroptions, $post) {
                        <div id="mysql" style="display: none">
                                 <table cellpadding="2" cellspacing="0" width="100%">
                                         <tr><td colspan="2"><h5><?php echo _("MySQL") ?><hr></h5></div></td></tr>
-				</table>
-
-                                <table cellpadding="2" cellspacing="0">
                                         <tr>
 						<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Hostname or IP address of the server running the MySQL database");?></span></a></td>
 						<td><input type="text" name="mysql_host" value="<?php echo $dynroute_details['mysql_host'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
@@ -224,6 +220,7 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 						<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("The query wich gets the result out of the database");?></span></a></td>
 						<td><input type="text" name="mysql_query" size="100" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         </tr>
+                                        <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
 				</table>
 			</div>
 			</td>
