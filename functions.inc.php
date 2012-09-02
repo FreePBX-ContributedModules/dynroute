@@ -16,9 +16,8 @@ function dynroute_init() {
     if (DB::IsError($results)) {
                     echo _("There is a problem with installation Contact support\n");
                     die;
-            } else {
-                    $results = $db->getAll($sql, DB_FETCHMODE_ASSOC);
-            }
+    } else {
+	$results = $db->getAll($sql, DB_FETCHMODE_ASSOC);
     }
     
     if (!isset($results[0])) {
