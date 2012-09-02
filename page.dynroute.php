@@ -183,38 +183,51 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 	               <td colspan="2">
                        <div id="odbc" style="display: none">
                                 <table cellpadding="2" cellspacing="0" width="100%">
-
                                         <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
-
+				</table>
+                                <table cellpadding="2" cellspacing="0">
                                         <tr>
                                                 <td width="50%"><a href="#" class="info"><?php echo _("Odbc data source name")?><span><?php echo _("Name of the odbc datasource given in odbc.ini")?></span></a></td>
                                                 <td><input type="text" name="odbc_name" value="<?php echo (isset($dynroute_details['odbc_name']) ? $dynroute_details['odbc_name'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         </tr>
 				</table>
 			</div>
+			</td>
 		</tr>
 
 
 
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Hostname or IP address of the server running the MySQL database");?></span></a></td>
-			<td><input type="text" name="mysql_host" value="<?php echo $dynroute_details['mysql_host'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
-		</tr>
-		<tr>
-			<td><a href="#" class="info"><?php echo _("Database");?><span><?php echo _("The name of the database out of wich the information is being queried");?></span></a></td>
-			<td><input type="text" name="mysql_dbname" value="<?php echo $dynroute_details['mysql_dbname'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
-		</tr>
-		<tr>
-			<td><a href="#" class="info"><?php echo _("Username");?><span><?php echo _("The user/login name for accessing the database");?></span></a></td>
-			<td><input type="text" name="mysql_username" value="<?php echo $dynroute_details['mysql_username'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
-		</tr>
-		<tr>
-			<td><a href="#" class="info"><?php echo _("Password");?><span><?php echo _("The password wich is needed to access the database");?></span></a></td>
-			<td><input type="text" name="mysql_password" value="<?php echo $dynroute_details['mysql_password'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
-		</tr>
-		<tr>
-			<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("The query wich gets the result out of the database");?></span></a></td>
-			<td><input type="text" name="mysql_query" size="100" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+	               <td colspan="2">
+                       <div id="mysql" style="display: none">
+                                <table cellpadding="2" cellspacing="0" width="100%">
+                                        <tr><td colspan="2"><h5><?php echo _("MySQL") ?><hr></h5></div></td></tr>
+				</table>
+
+                                <table cellpadding="2" cellspacing="0">
+                                        <tr>
+						<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Hostname or IP address of the server running the MySQL database");?></span></a></td>
+						<td><input type="text" name="mysql_host" value="<?php echo $dynroute_details['mysql_host'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+					</tr>
+					<tr>
+						<td><a href="#" class="info"><?php echo _("Database");?><span><?php echo _("The name of the database out of wich the information is being queried");?></span></a></td>
+						<td><input type="text" name="mysql_dbname" value="<?php echo $dynroute_details['mysql_dbname'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+					</tr>
+					<tr>
+						<td><a href="#" class="info"><?php echo _("Username");?><span><?php echo _("The user/login name for accessing the database");?></span></a></td>
+						<td><input type="text" name="mysql_username" value="<?php echo $dynroute_details['mysql_username'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+					</tr>
+					<tr>
+						<td><a href="#" class="info"><?php echo _("Password");?><span><?php echo _("The password wich is needed to access the database");?></span></a></td>
+						<td><input type="text" name="mysql_password" value="<?php echo $dynroute_details['mysql_password'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+					</tr>
+					<tr>
+						<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("The query wich gets the result out of the database");?></span></a></td>
+						<td><input type="text" name="mysql_query" size="100" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+                                        </tr>
+				</table>
+			</div>
+			</td>
 		</tr>
                 <tr>
                         <td><a href="#" class="info"><?php echo _("Result Variable");?><span><?php echo _("Optional variable name if you want the query result to be available later in the call (e.g. futher dynamic route query or to pass to agi script)");?></span></a></td>
