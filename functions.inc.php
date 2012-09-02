@@ -195,6 +195,7 @@ function dynroute_add_command($id, $cmd, $dest) {
 function dynroute_do_edit($id, $post) {
 	global $db;
         $displayname = $db->escapeSimple($post['displayname']);
+        $sourcetype = $db->escapeSimple($post['sourcetype']);
         $mysql_host = $db->escapeSimple($post['mysql_host']);
         $mysql_dbname = $db->escapeSimple($post['mysql_dbname']);
         $mysql_query = $db->escapeSimple($post['mysql_query']);
@@ -216,7 +217,7 @@ function dynroute_do_edit($id, $post) {
 	UPDATE dynroute 
 	SET 
 		displayname='$displayname', 
-		sourcetype='mysql', 
+		sourcetype=$sourcetype, 
 		mysql_host='$mysql_host', 
 		mysql_dbname='$mysql_dbname', 
 		mysql_username='$mysql_username', 

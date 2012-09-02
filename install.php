@@ -97,8 +97,43 @@ if(DB::IsError($check)) {
         if(DB::IsError($result)) { die_freepbx($result->getDebugInfo()); }
 }
 
-// This used to be called from page.ivr.php every time, it should not be needed, it should
-// be called once and be done with.
-//
+$sql = "SELECT odbc_name FROM dynroute";
+$check = $db->getRow($sql, DB_FETCHMODE_ASSOC);
+if(DB::IsError($check)) {
+        // add new field
+        $sql = "ALTER TABLE dynroute ADD COLUMN `odbc_name` VARCHAR(100);";
+        $result = $db->query($sql);
+        if(DB::IsError($result)) { die_freepbx($result->getDebugInfo()); }
+}
+
+$sql = "SELECT odbc_username FROM dynroute";
+$check = $db->getRow($sql, DB_FETCHMODE_ASSOC);
+if(DB::IsError($check)) {
+        // add new field
+        $sql = "ALTER TABLE dynroute ADD COLUMN `odbc_username` VARCHAR(30);";
+        $result = $db->query($sql);
+        if(DB::IsError($result)) { die_freepbx($result->getDebugInfo()); }
+}
+
+$sql = "SELECT odbc_password FROM dynroute";
+$check = $db->getRow($sql, DB_FETCHMODE_ASSOC);
+if(DB::IsError($check)) {
+        // add new field
+        $sql = "ALTER TABLE dynroute ADD COLUMN `odbc_password` VARCHAR(30);";
+        $result = $db->query($sql);
+        if(DB::IsError($result)) { die_freepbx($result->getDebugInfo()); }
+}
+
+$sql = "SELECT odbc_query FROM dynroute";
+$check = $db->getRow($sql, DB_FETCHMODE_ASSOC);
+if(DB::IsError($check)) {
+        // add new field
+        $sql = "ALTER TABLE dynroute ADD COLUMN `odbc_query` TEXT;";
+        $result = $db->query($sql);
+        if(DB::IsError($result)) { die_freepbx($result->getDebugInfo()); }
+}
+
+
+
 dynroute_init();
 

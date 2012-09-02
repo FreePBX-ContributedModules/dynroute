@@ -134,9 +134,10 @@ function dynroute_show_edit($id, $nbroptions, $post) {
  
 <?php
         $annmsg_id = isset($dynroute_details['announcement_id'])?$dynroute_details['announcement_id']:'';
+
         if(function_exists('recordings_list')) { //only include if recordings is enabled ?>
                 <tr>
-                        <td><a href="#" class="info"><?php echo _("Announcement")?><span><?php echo _("Message to be played to the caller. To add additional recordings please use the \"System Recordings\" MENU to the left")?></span></a></td>
+                        <td><a href="#" class="info"><?php echo _("Announcement")?><span><?php echo _("Message to be played to the caller. To add additional recordings please use the \"System Recordings\" MENU above")?></span></a></td>
                         <td>
                                 <select name="annmsg_id" tabindex="<?php echo ++$tabindex;?>">
                                 <?php
@@ -167,6 +168,14 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 <?php
         }
 ?>
+		<tr>
+			<td>
+                        <select id="sourcetype" name="sourcetype" onChange="javascript:displaySourceParameters(this, this.selectedIndex)" tabindex="<?php echo ++$tabindex;?>">
+                                <option value="mysql" <?php echo ($dynroute_details['sourcetype'] == 'mysql' ? 'selected' : '')?>>MySQL</option>
+                                <option value="odbc" <?php echo ($dynroute_details['sourcetype'] == 'odbc' ? 'selected' : '')?>>ODBC</option>
+                        </select>
+			</td>
+		</tr>
 
 		<tr>
 			<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Hostname or IP address of the server running the MySQL database");?></span></a></td>
@@ -299,5 +308,19 @@ function drawdestinations($count, $sel,  $dest) {
 		<td> <table> <?php echo drawselects($dest,$count); ?> </table> </td>
 	</tr>
 	<tr><td colspan=2><hr /></td></tr>
+<script language="javascript">
+<!--
+function displaySourceParameters(sourcetypeSelect, key) {
+        if (sourcetypeSelect.options[key].value == 'odbc') {
+                document.getElementById('odbc').style.display = '';
+                document.getElementById('mysql').style.display = 'none';
+        } else if (sourcetypeSelect.options[key].value == 'mysql') {
+                document.getElementById('odbc').style.display = 'none';
+                document.getElementById('mysql').style.display = '';
+        }
+}
+-->
+</script>
+
 <?php
 }
