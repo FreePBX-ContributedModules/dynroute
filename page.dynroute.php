@@ -169,23 +169,23 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 ?>
 
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Host where database to check is located");?></span></a></td>
-			<td><input type="text" iname="mysql_host" value="<?php echo $dynroute_details['mysql_host'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+			<td><a href="#" class="info"><?php echo _("Host");?><span><?php echo _("Hostname or IP address of the server running the MySQL database");?></span></a></td>
+			<td><input type="text" name="mysql_host" value="<?php echo $dynroute_details['mysql_host'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Database");?><span><?php echo _("Database name");?></span></a></td>
+			<td><a href="#" class="info"><?php echo _("Database");?><span><?php echo _("The name of the database out of wich the information is being queried");?></span></a></td>
 			<td><input type="text" name="mysql_dbname" value="<?php echo $dynroute_details['mysql_dbname'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Username");?><span><?php echo _("Username for mysql database");?></span></a></td>
+			<td><a href="#" class="info"><?php echo _("Username");?><span><?php echo _("The user/login name for accessing the database");?></span></a></td>
 			<td><input type="text" name="mysql_username" value="<?php echo $dynroute_details['mysql_username'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Password");?><span><?php echo _("Password for username above");?></span></a></td>
+			<td><a href="#" class="info"><?php echo _("Password");?><span><?php echo _("The password wich is needed to access the database");?></span></a></td>
 			<td><input type="text" name="mysql_password" value="<?php echo $dynroute_details['mysql_password'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
 		<tr>
-			<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("Query to execute");?></span></a></td>
+			<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("The query wich gets the result out of the database");?></span></a></td>
 			<td><input type="text" name="mysql_query" size="100" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
 		</tr>
                 <tr>
@@ -284,8 +284,6 @@ theForm.displayname.focus();
 
 
 <?php
-
-echo "</div>\n";
 }
 
 function drawdestinations($count, $sel,  $dest) { 
@@ -303,32 +301,3 @@ function drawdestinations($count, $sel,  $dest) {
 	<tr><td colspan=2><hr /></td></tr>
 <?php
 }
-
-// this can be removed in 2.2 and put back to just runModuleSQL which is in admin/functions.inc.php
-// I didn't want to do it in 2.1 as there's a significant user base out there, and it will break
-// them if we do it here.
-
-function localrunModuleSQL($moddir,$type){
-        global $db;
-        $data='';
-        if (is_file("modules/{$moddir}/{$type}.sql")) {
-                // run sql script
-                $fd = fopen("modules/{$moddir}/{$type}.sql","r");
-                while (!feof($fd)) {
-                        $data .= fread($fd, 1024);
-                }
-                fclose($fd);
-
-                preg_match_all("/((SELECT|INSERT|UPDATE|DELETE|CREATE|DROP).*);\s*\n/Us", $data, $matches);
-
-                foreach ($matches[1] as $sql) {
-                                $result = $db->query($sql);
-                                if(DB::IsError($result)) {
-                                        return false;
-                                }
-                }
-                return true;
-        }
-                return true;
-}
-

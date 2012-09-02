@@ -14,13 +14,7 @@ function dynroute_init() {
     $results = $db->getAll($sql, DB_FETCHMODE_ASSOC);
 
     if (DB::IsError($results)) {
-            // It couldn't locate the table. This is bad. Lets try to re-create it, just
-            // in case the user has had the brilliant idea to delete it.
-            // runModuleSQL taken from page.module.php. It's inclusion here is probably
-            // A bad thing. It should be, I think, globally available.
-            localrunModuleSQL('dynroute', 'uninstall');
-            if (localrunModuleSQL('dynroute', 'install')==false) {
-                    echo _("There is a problem with install.sql, cannot re-create databases. Contact support\n");
+                    echo _("There is a problem with installation Contact support\n");
                     die;
             } else {
                     $results = $db->getAll($sql, DB_FETCHMODE_ASSOC);
