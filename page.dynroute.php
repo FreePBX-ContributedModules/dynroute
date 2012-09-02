@@ -131,6 +131,10 @@ function dynroute_show_edit($id, $nbroptions, $post) {
                         <td><a href="#" class="info"><?php echo _("Input Variable");?><span><?php echo _("Optional variable name if you want the dmtf input to be available later in the call (e.g. futher dynamic route query or to pass to agi script)");?></span></a></td>
                         <td><input type="text" name="chan_var_name" value="<?php echo $dynroute_details['chan_var_name'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                 </tr>
+                <tr>
+                        <td><a href="#" class="info"><?php echo _("Result Variable");?><span><?php echo _("Optional variable name if you want the query result to be available later in the call (e.g. futher dynamic route query or to pass to agi script)");?></span></a></td>
+                        <td><input type="text" name="chan_var_name_res" value="<?php echo $dynroute_details['chan_var_name_res'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+                </tr>
  
 <?php
         $annmsg_id = isset($dynroute_details['announcement_id'])?$dynroute_details['announcement_id']:'';
@@ -184,10 +188,9 @@ function dynroute_show_edit($id, $nbroptions, $post) {
                                 <table cellpadding="2" cellspacing="0" width="100%">
                                         <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
                                         <tr>
-                                                <td><a href="#" class="info"><?php echo _("Odbc data source name")?><span><?php echo _("Name of the odbc datasource given in odbc.ini")?></span></a></td>
+                                                <td><a href="#" class="info"><?php echo _("ODBC data source name")?><span><?php echo _("Name of the odbc datasource given in odbc.ini")?></span></a></td>
                                                 <td><input type="text" name="odbc_name" value="<?php echo (isset($dynroute_details['odbc_name']) ? $dynroute_details['odbc_name'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         </tr>
-                                        <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
 				</table>
 			</div>
 			</td>
@@ -220,15 +223,10 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 						<td><a href="#" class="info"><?php echo _("Query");?><span><?php echo _("The query wich gets the result out of the database");?></span></a></td>
 						<td><input type="text" name="mysql_query" size="50" value="<?php echo $dynroute_details['mysql_query'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         </tr>
-                                        <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
 				</table>
 			</div>
 			</td>
 		</tr>
-                <tr>
-                        <td><a href="#" class="info"><?php echo _("Result Variable");?><span><?php echo _("Optional variable name if you want the query result to be available later in the call (e.g. futher dynamic route query or to pass to agi script)");?></span></a></td>
-                        <td><input type="text" name="chan_var_name_res" value="<?php echo $dynroute_details['chan_var_name_res'] ?>" tabindex="<?php echo ++$tabindex;?>"></td>
-                </tr>
 		<tr><td colspan=2><hr /></td></tr>
 		<tr><td colspan=2>
 
