@@ -177,6 +177,7 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 
 			<td>
                         <select id="sourcetype" name="sourcetype" onChange="javascript:displaySourceParameters(this, this.selectedIndex)" tabindex="<?php echo ++$tabindex;?>">
+                                <option value="none" <?php echo ($dynroute_details['sourcetype'] == 'none' ? 'selected' : '')?>>MySQL</option>
                                 <option value="mysql" <?php echo ($dynroute_details['sourcetype'] == 'mysql' ? 'selected' : '')?>>MySQL</option>
                                 <option value="odbc" <?php echo ($dynroute_details['sourcetype'] == 'odbc' ? 'selected' : '')?>>ODBC</option>
                         </select>
@@ -188,8 +189,10 @@ function dynroute_show_edit($id, $nbroptions, $post) {
                                 <table cellpadding="2" cellspacing="0" width="100%">
                                         <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
                                         <tr>
-                                                <td><a href="#" class="info"><?php echo _("ODBC data source name")?><span><?php echo _("Name of the odbc datasource given in odbc.ini")?></span></a></td>
-                                                <td><input type="text" name="odbc_name" value="<?php echo (isset($dynroute_details['odbc_name']) ? $dynroute_details['odbc_name'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+                                                <td><a href="#" class="info"><?php echo _("ODBC function name")?><span><?php echo _("Name of the odbc function (excluding ODBC prefix) in /etc/asterisk/func_odbc.conf")?></span></a></td>
+                                                <td><input type="text" name="odbc_func" value="<?php echo (isset($dynroute_details['odbc_func']) ? $dynroute_details['odbc_func'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+                                                <td><a href="#" class="info"><?php echo _("ODBC query")?><span><?php echo _("The query which gets the result out of the database")?></span></a></td>
+                                                <td><input type="text" name="odbc_query" size="50" value="<?php echo (isset($dynroute_details['odbc_query']) ? $dynroute_details['odbc_query'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         </tr>
 				</table>
 			</div>
