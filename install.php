@@ -33,6 +33,8 @@ $sql = "
 		`mysql_query` text,
 		`mysql_username` varchar(30) default NULL,
 		`mysql_password` varchar(30) default NULL,
+		`odbc_func` varchar(100) default NULL,
+		`odbc_query` text,
                 `enable_dtmf_input` varchar(8), 
                 `timeout` INT, 
                 `announcement_id` INT(11),

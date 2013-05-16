@@ -99,23 +99,28 @@ function dynroute_get_config($engine) {
 			if(is_array($dynroutelist)) {
 				foreach($dynroutelist as $item) {
 					$id = "dynroute-".$item['dynroute_id'];
-					$details = dynroute_get_details($item['dynroute_id']);
-					if (version_compare($version, "1.6", "lt")) {
-                                                          //Escaping MySQL query - thanks to http://www.asteriskgui.com/index.php?get=utilities-mysqlscape
-                                                          $replacements = array (
-                                                                '\\' => '\\\\',
-                                                                '"' => '\\"',
-                                                                '\'' => '\\\'',
-                                                                ' ' => '\\ ',
-                                                                ',' => '\\,',
-                                                                '(' => '\\(',
-                                                                ')' => '\\)',
-                                                                '.' => '\\.',
-                                                                '|' => '\\|'
-                                                          );
-						$query = str_replace(array_keys($replacements), array_values($replacements), $item['mysql_query']);
-					} else {
-						$query = $item['mysql_query'];
+					$details = dynroute_get_details($item['dynroute_id']);	
+					if ($item['sourcetype']=='mysql') {
+						if (version_compare($version, "1.6", "lt")) {
+		                                                  //Escaping MySQL query - thanks to http://www.asteriskgui.com/index.php?get=utilities-mysqlscape
+		                                                  $replacements = array (
+		                                                        '\\' => '\\\\',
+		                                                        '"' => '\\"',
+		                                                        '\'' => '\\\'',
+		                                                        ' ' => '\\ ',
+		                                                        ',' => '\\,',
+		                                                        '(' => '\\(',
+		                                                        ')' => '\\)',
+		                                                        '.' => '\\.',
+		                                                        '|' => '\\|'
+		                                                  );
+							$query = str_replace(array_keys($replacements), array_values($replacements), $item['mysql_query']);
+						} else {
+							$query = $item['mysql_query'];
+						}
+					}
+					if ($item['sourcetype']=='odbc') {
+						$query = $item['odbc_query'];
 					}
                                         $query = str_replace('[NUMBER]', '${CALLERID(num)}', $query);
                                         $query = str_replace('[INPUT]', '${dtmfinput}', $query);
@@ -133,7 +138,7 @@ function dynroute_get_config($engine) {
 						if ($item['chan_var_name'] != '')
 							$ext->add($id, 's', '', new ext_setvar('__DYNROUTE_'.$item['chan_var_name'], '${dtmfinput}'));
                                         }
-					if ($item['mysql_host']!='')
+					if ($item['sourcetype']=='mysql' && $item['mysql_host']!='' && $item['mysql_query']!='')
 					{
 						$ext->add($id, 's', '', new ext_setvar('connid', '""'));
                                         	$ext->add($id, 's', '', new ext_mysql_connect('connid', $item['mysql_host'],  $item['mysql_username'],  $item['mysql_password'],  $item['mysql_dbname']));
@@ -145,6 +150,12 @@ function dynroute_get_config($engine) {
 						if ($item['chan_var_name_res'] != '')
 							$ext->add($id, 's', '', new ext_setvar('__DYNROUTE_'.$item['chan_var_name_res'], '${dynroute}'));
 						$ext->add($id, 's', '', new ext_gotoif('$[${fetchid} = 0]',$id.',1,1'));
+                                        }
+					if ($item['sourcetype']=='odbc' && $item['odbc_func']!='')
+					{
+						$ext->add($id, 's', '', new ext_setvar('dynroute', '${ODBC_'.$item['odbc_func'].'("'.$query.'")'));
+						if ($item['chan_var_name_res'] != '')
+							$ext->add($id, 's', '', new ext_setvar('__DYNROUTE_'.$item['chan_var_name_res'], '${dynroute}'));
                                         }
 					$dests = dynroute_get_dests($item['dynroute_id']);
 					if (!empty($dests)) {
@@ -201,6 +212,8 @@ function dynroute_do_edit($id, $post) {
         $mysql_query = $db->escapeSimple($post['mysql_query']);
         $mysql_username = $db->escapeSimple($post['mysql_username']);
         $mysql_password = $db->escapeSimple($post['mysql_password']);
+        $odbc_func = $db->escapeSimple($post['odbc_func']);
+        $odbc_query = $db->escapeSimple($post['odbc_query']);
         $annmsg_id = isset($post['annmsg_id'])?$post['annmsg_id']:'';
         $enable_dtmf_input = isset($post['enable_dtmf_input'])?$post['enable_dtmf_input']:'';
 
@@ -217,12 +230,14 @@ function dynroute_do_edit($id, $post) {
 	UPDATE dynroute 
 	SET 
 		displayname='$displayname', 
-		sourcetype=$sourcetype, 
+		sourcetype='$sourcetype', 
 		mysql_host='$mysql_host', 
 		mysql_dbname='$mysql_dbname', 
 		mysql_username='$mysql_username', 
 		mysql_password='$mysql_password', 
 		mysql_query='$mysql_query',
+		odbc_func='$odbc_func',
+		odbc_query='$odbc_query',
 		announcement_id='$annmsg_id',  
 		enable_dtmf_input='$enable_dtmf_input',  
 		timeout='$timeout',  

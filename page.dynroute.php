@@ -51,18 +51,7 @@ switch ($action) {
 <h3><?php 
 echo _("Instructions")."</h3>";
 echo _("You use the Dynamic Routing module to route calls based on sql lookup.")."\n";
-echo _("It is also possible to request user input (dtmf) and then use that in the query too.")."\n";
-echo _("Optionally an announcement can be played before reading dtmf.")."\n";
-echo _("You need to specify hostname, database name, username and password for mysql server.")."\n";
-echo _("In the query you can use the special string [NUMBER] to be substituted by the incoming callerid number")."\n"; 
-echo _("or the special string [INPUT] to be substituted by the captured dtmf.")."\n"; 
-echo _("The selected field returned from the query is matched against the options text to decide which destination to use.")."\n"; 
-echo _("Optionally you may define variable names in order to capture the dtmf input and / or query result. Those variables may")."\n"; 
-echo _("be used later on a further pass through a dynroute inside the query string be enclosing in [] or in custom destinations.")."\n"; 
-echo _("When refering to the variables in custom destinations (typically to pass to an agi script) DYNROUTE_ is prefixed to the variable name.")."\n"; 
-echo _("You should define an option named default which will be used if no match is found. If you do not the call will be hang up on no match.")."\n"; 
-echo _("If you have defined a default option you may also omit the mysql hostname and other parameters in order to bypass a query and")."\n";
-echo _("procede with the default action. This is useful if you only want to capture dtmf into a variable without a mysql lookup.")."\n"; ?>
+echo _("For configuration instructions see http://www.voipsupport.it/")."\n";
 </div>
 
 <?php
@@ -177,7 +166,7 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 
 			<td>
                         <select id="sourcetype" name="sourcetype" onChange="javascript:displaySourceParameters(this, this.selectedIndex)" tabindex="<?php echo ++$tabindex;?>">
-                                <option value="none" <?php echo ($dynroute_details['sourcetype'] == 'none' ? 'selected' : '')?>>MySQL</option>
+                                <option value="none" <?php echo ($dynroute_details['sourcetype'] == 'none' ? 'selected' : '')?>>choose...</option>
                                 <option value="mysql" <?php echo ($dynroute_details['sourcetype'] == 'mysql' ? 'selected' : '')?>>MySQL</option>
                                 <option value="odbc" <?php echo ($dynroute_details['sourcetype'] == 'odbc' ? 'selected' : '')?>>ODBC</option>
                         </select>
@@ -191,6 +180,8 @@ function dynroute_show_edit($id, $nbroptions, $post) {
                                         <tr>
                                                 <td><a href="#" class="info"><?php echo _("ODBC function name")?><span><?php echo _("Name of the odbc function (excluding ODBC prefix) in /etc/asterisk/func_odbc.conf")?></span></a></td>
                                                 <td><input type="text" name="odbc_func" value="<?php echo (isset($dynroute_details['odbc_func']) ? $dynroute_details['odbc_func'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
+                                        <tr>
+                                        </tr>
                                                 <td><a href="#" class="info"><?php echo _("ODBC query")?><span><?php echo _("The query which gets the result out of the database")?></span></a></td>
                                                 <td><input type="text" name="odbc_query" size="50" value="<?php echo (isset($dynroute_details['odbc_query']) ? $dynroute_details['odbc_query'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         </tr>
