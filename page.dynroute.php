@@ -51,7 +51,7 @@ switch ($action) {
 <h3><?php 
 echo _("Instructions")."</h3>";
 echo _("You use the Dynamic Routing module to route calls based on sql lookup.")."\n";
-echo _("For configuration instructions see http://www.voipsupport.it/")."\n";
+echo _("For configuration instructions see http://www.voipsupport.it/")."\n"; ?>
 </div>
 
 <?php
@@ -174,7 +174,7 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 		</tr>
 		<tr>
 	               <td colspan="2">
-                       <div id="odbc" style="display: none">
+                       <div id="odbc" <?php if ($dynroute_details['sourcetype'] != 'odbc') echo 'style="display: none"';?>>
                                 <table cellpadding="2" cellspacing="0" width="100%">
                                         <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
                                         <tr>
@@ -194,7 +194,7 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 
 		<tr>
 	               <td colspan="2">
-                       <div id="mysql" style="display: none">
+                       <div id="mysql" <?php if ($dynroute_details['sourcetype'] != 'mysql') echo 'style="display: none"';?>>
                                 <table cellpadding="2" cellspacing="0" width="100%">
                                         <tr><td colspan="2"><h5><?php echo _("MySQL") ?><hr></h5></div></td></tr>
                                         <tr>

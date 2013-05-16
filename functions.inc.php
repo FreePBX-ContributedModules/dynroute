@@ -153,7 +153,7 @@ function dynroute_get_config($engine) {
                                         }
 					if ($item['sourcetype']=='odbc' && $item['odbc_func']!='')
 					{
-						$ext->add($id, 's', '', new ext_setvar('dynroute', '${ODBC_'.$item['odbc_func'].'("'.$query.'")'));
+						$ext->add($id, 's', '', new ext_setvar('dynroute', '${ODBC_'.$item['odbc_func'].'("'.$query.'")}'));
 						if ($item['chan_var_name_res'] != '')
 							$ext->add($id, 's', '', new ext_setvar('__DYNROUTE_'.$item['chan_var_name_res'], '${dynroute}'));
                                         }
