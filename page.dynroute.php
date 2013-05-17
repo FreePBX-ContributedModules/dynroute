@@ -15,9 +15,9 @@ switch ($action) {
 	case "add":
 		$id = dynroute_get_dynroute_id('Unnamed');
 		// Set the defaults
-		dynroute_sidebar($id);
-		dynroute_show_edit($id, 3,  $def);
 		$def['timeout']=5;
+		dynroute_sidebar($id);
+		dynroute_show_edit($id, $nbroptions,  $def);
 		break;
 	case "edit":
 		dynroute_sidebar($id);
@@ -47,7 +47,7 @@ switch ($action) {
 		dynroute_sidebar($id);
 ?>
 <div class="content">
-<h2><?php echo _("Routing"); ?></h2>
+<h2><?php echo _("Dynamic Routing"); ?></h2>
 <h3><?php 
 echo _("Instructions")."</h3>";
 echo _("You use the Dynamic Routing module to route calls based on sql lookup.")."\n";
@@ -79,10 +79,9 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 	global $tabindex;
 
 	$dynroute_details = dynroute_get_details($id);
-	$dynroute_dests = dynroute_get_dests($id);
 ?>
 	<div class="content">
-	<h2><?php echo _("Dynamic Routes"); ?></h2>
+	<h2><?php echo _("Dynamic Routing"); ?></h2>
 	<h3><?php echo _("Edit Menu")." ".$dynroute_details['displayname']; ?></h3>
 <?php 
 ?>
@@ -236,17 +235,23 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 	<tr><td colspan=2><hr /></td></tr>
 <?php
 	// Draw the destinations
-	$dests = dynroute_get_dests($id);
+	$default_dest = dynroute_get_dests($id,'y');
 	$count = 0;
+?>
+	<tr>
+	<td style="text-align:right;">Default destination</td>
+	<td> <table> <?php echo drawselects($default_dest['selection'],$count++); ?> </table> </td>
+
+	</tr>	
+<?php
+	$dests = dynroute_get_dests($id,'n');
 	if (!empty($dests)) {
 		foreach ($dests as $dest) {
-			drawdestinations($count, $dest['selection'], $dest['dest']);
-			$count++;
-    }
+			drawdestinations($count++, $dest['selection'], $dest['dest']);
+		}
 	}
 	while ($count < $nbroptions) {
-		drawdestinations($count, null, null, 0);
-		$count++;
+		drawdestinations($count++, null, null);
 	}
 ?>
 	

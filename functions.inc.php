@@ -157,19 +157,15 @@ function dynroute_get_config($engine) {
 						if ($item['chan_var_name_res'] != '')
 							$ext->add($id, 's', '', new ext_setvar('__DYNROUTE_'.$item['chan_var_name_res'], '${dynroute}'));
                                         }
-					$dests = dynroute_get_dests($item['dynroute_id']);
+					$dests = dynroute_get_dests($item['dynroute_id'],'n');
 					if (!empty($dests)) {
-						$default_dest='';
 						foreach($dests as $dest) {
-							if ($dest['selection'] == 'default') {
-							 	$default_dest=$dest['dest'];
-							} else {
-								$ext->add($id, 's', '', new ext_gotoif('$["${dynroute}" = "'.$dest['selection'].'"]',$dest['dest']));
-							}
+							$ext->add($id, 's', '', new ext_gotoif('$["${dynroute}" = "'.$dest['selection'].'"]',$dest['dest']));
 						}
 					}
 					$ext->add($id, 's', '', new ext_goto($id.',1,1'));
-					if ($default_dest != '') $ext->add($id, '1', '', new ext_goto($default_dest));
+					$dests = dynroute_get_dests($item['dynroute_id'],'y');
+					if (!empty($dests) && $dest['dest'] != '') $ext->add($id, '1', '', new ext_goto($dest['dest']));
 					$ext->add($id, '1', '', new ext_hangup(''));
 				}
 			}
@@ -191,16 +187,16 @@ function dynroute_get_dynroute_id($name) {
 	
 }
 
-function dynroute_add_command($id, $cmd, $dest) {
+function dynroute_add_command($id, $cmd, $dest, $default_dest) {
 	global $db;
 	// Does it already exist?
-	$res = $db->getRow("SELECT * from dynroute_dests where dynroute_id='$id' and selection='$cmd'");
+	$res = $db->getRow("SELECT * from dynroute_dests where dynroute_id='$id' and selection='$cmd' and default_dest='$default_dest'");
 	if (count($res) == 0) {
 		// Just add it.
-		sql("INSERT INTO dynroute_dests VALUES('$id', '$cmd', '$dest')");
+		sql("INSERT INTO dynroute_dests (dynroute_id, selection, default_dest, dest) VALUES('$id', '$cmd', '$default_dest', '$dest')");
 	} else {
 		// Update it.
-		sql("UPDATE dynroute_dests SET dest='$dest' where dynroute_id='$id' and selection='$cmd'");
+		sql("UPDATE dynroute_dests SET dest='$dest' where dynroute_id='$id' and selection='$cmd' and default_dest='$default_dest'");
 	}
 }
 function dynroute_do_edit($id, $post) {
@@ -223,7 +219,6 @@ function dynroute_do_edit($id, $post) {
         $timeout = isset($post['timeout'])?$post['timeout']:'';
         $chan_var_name = isset($post['chan_var_name'])?$post['chan_var_name']:'';
         $chan_var_name_res = isset($post['chan_var_name_res'])?$post['chan_var_name_res']:'';
-
  
 	
 	$sql = "
@@ -251,6 +246,8 @@ function dynroute_do_edit($id, $post) {
 	sql("DELETE FROM dynroute_dests where dynroute_id='$id'");
 	// Now, lets find all the goto's in the post. Destinations return gotoN => foo and get fooN for the dest.
 	// Is that right, or am I missing something?
+
+	$first_option=true;
 	foreach(array_keys($post) as $var) {
 		if (preg_match('/goto(\d+)/', $var, $match)) {
 			// This is a really horrible line of code. take N, and get value of fooN. See above. Note we
@@ -259,8 +256,12 @@ function dynroute_do_edit($id, $post) {
 			$cmd = $post['option'.$match[1]];
 			// Debugging if it all goes pear shaped.
 			// print "I think pushing $cmd does $dest<br>\n";
+			if ($first_option)  {
+				dynroute_add_command($id, $cmd, $dest, 'y');
+				$first_option=false;
+			}
 			if (strlen($cmd))
-				dynroute_add_command($id, $cmd, $dest);
+				dynroute_add_command($id, $cmd, $dest, 'n');
 		}
 	}
 }
@@ -288,10 +289,21 @@ function dynroute_get_details($id) {
         return $res[0];
 }
 
-function dynroute_get_dests($id) {
+function dynroute_get_dests($id,$scope) {
 	global $db;
+	switch($scope) {
+		case 'y':
+			$sql = "SELECT selection, dest FROM dynroute_dests where dynroute_id='$id' AND default_dest='y' ORDER BY selection";
+		break;
+		case 'n':
+			$sql = "SELECT selection, dest FROM dynroute_dests where dynroute_id='$id' AND default_dest='n' ORDER BY selection";
+		break;
+		case 'a':
+		default:
+			$sql = "SELECT selection, dest FROM dynroute_dests where dynroute_id='$id' ORDER BY selection";
+		break;
+	}
 
-	$sql = "SELECT selection, dest FROM dynroute_dests where dynroute_id='$id' ORDER BY selection";
         $res = $db->getAll($sql, DB_FETCHMODE_ASSOC);
         if(DB::IsError($res)) {
                 return null;
@@ -315,7 +327,7 @@ function dynroute_check_destinations($dest=true) {
 	if (is_array($dest) && empty($dest)) {
 		return $destlist;
 	}
-	$sql = "SELECT dest, displayname, selection, a.dynroute_id dynroute_id FROM dynroute a INNER JOIN dynroute_dests d ON a.dynroute_id = d.dynroute_id  ";
+	$sql = "SELECT dest, default_dest, displayname, selection, a.dynroute_id dynroute_id FROM dynroute a INNER JOIN dynroute_dests d ON a.dynroute_id = d.dynroute_id  ";
 	if ($dest !== true) {
 		$sql .= "WHERE dest in ('".implode("','",$dest)."')";
 	}
@@ -325,9 +337,10 @@ function dynroute_check_destinations($dest=true) {
 	foreach ($results as $result) {
 		$thisdest = $result['dest'];
 		$thisid   = $result['dynroute_id'];
+		if ($result['default_dest']=='y') $sel='Default'; else $sel=$result['selection';
 		$destlist[] = array(
 			'dest' => $thisdest,
-			'description' => sprintf(_("Route: %s / Option: %s"),$result['displayname'],$result['selection']),
+			'description' => sprintf(_("Route: %s / Option: %s"),$result['displayname'],$sel]),
 			'edit_url' => 'config.php?display=dynroute&action=edit&id='.urlencode($thisid),
 		);
 	}

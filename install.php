@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS dynroute_dests
 ( 
 	`dynroute_id` INT NOT NULL, 
 	`selection` VARCHAR(255), 
+	`default_dest` CHAR(1) default 'n',
 	`dest` VARCHAR(50) 
 )
 ";
@@ -117,7 +118,17 @@ if(DB::IsError($check)) {
         if(DB::IsError($result)) { die_freepbx($result->getDebugInfo()); }
 }
 
-
+$sql = "SELECT default_dest FROM dynroute_dests";
+$check = $db->getRow($sql, DB_FETCHMODE_ASSOC);
+if(DB::IsError($check)) {
+        // add new field
+        $sql = "ALTER TABLE dynroute_dests ADD COLUMN `default_dest` CHAR(1) default 'n';";
+        $result = $db->query($sql);
+        if(DB::IsError($result)) { die_freepbx($result->getDebugInfo());
+	$sql = "UPDATE dynroute_dests set default_dest='y',selection='' WHERE selection='default';";
+	$result = $db->query($sql);
+        if(DB::IsError($result)) { die_freepbx($result->getDebugInfo()); }
+}
 
 dynroute_init();
 
