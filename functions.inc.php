@@ -165,7 +165,7 @@ function dynroute_get_config($engine) {
 					}
 					$ext->add($id, 's', '', new ext_goto($id.',1,1'));
 					$dests = dynroute_get_dests($item['dynroute_id'],'y');
-					if (!empty($dests) && $dest['dest'] != '') $ext->add($id, '1', '', new ext_goto($dest['dest']));
+					if (!empty($dests) && $dest['dest'] != '') $ext->add($id, '1', '', new ext_goto($dests[0]['dest']));
 					$ext->add($id, '1', '', new ext_hangup(''));
 				}
 			}
