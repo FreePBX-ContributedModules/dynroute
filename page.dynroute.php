@@ -177,11 +177,11 @@ function dynroute_show_edit($id, $nbroptions, $post) {
                                 <table cellpadding="2" cellspacing="0" width="100%">
                                         <tr><td colspan="2"><h5><?php echo _("ODBC") ?><hr></h5></div></td></tr>
                                         <tr>
-                                                <td><a href="#" class="info"><?php echo _("ODBC function name")?><span><?php echo _("Name of the odbc function (excluding ODBC prefix) in /etc/asterisk/func_odbc.conf")?></span></a></td>
+                                                <td><a href="#" class="info"><?php echo _("Function")?><span><?php echo _("Name of the odbc function (excluding ODBC prefix) in /etc/asterisk/func_odbc.conf")?></span></a></td>
                                                 <td><input type="text" name="odbc_func" value="<?php echo (isset($dynroute_details['odbc_func']) ? $dynroute_details['odbc_func'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         <tr>
                                         </tr>
-                                                <td><a href="#" class="info"><?php echo _("ODBC query")?><span><?php echo _("The query which gets the result out of the database")?></span></a></td>
+                                                <td><a href="#" class="info"><?php echo _("Query")?><span><?php echo _("The query which gets the result out of the database")?></span></a></td>
                                                 <td><input type="text" name="odbc_query" size="50" value="<?php echo (isset($dynroute_details['odbc_query']) ? $dynroute_details['odbc_query'] : ''); ?>" tabindex="<?php echo ++$tabindex;?>"></td>
                                         </tr>
 				</table>
@@ -235,12 +235,13 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 	<tr><td colspan=2><hr /></td></tr>
 <?php
 	// Draw the destinations
-	$default_dest = dynroute_get_dests($id,'y');
+	$default_dest_row = dynroute_get_dests($id,'y');
+	if (!empty($default_dest_row)) $default_dest=$default_dest_row[0]['dest']; else $default_dest='';
 	$count = 0;
 ?>
 	<tr>
 	<td style="text-align:right;">Default destination</td>
-	<td> <table> <?php echo drawselects($default_dest['selection'],$count++); ?> </table> </td>
+	<td> <table> <?php echo drawselects($default_dest,$count++); ?> </table> </td>
 
 	</tr>	
 <?php

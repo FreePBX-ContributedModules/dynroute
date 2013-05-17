@@ -337,10 +337,10 @@ function dynroute_check_destinations($dest=true) {
 	foreach ($results as $result) {
 		$thisdest = $result['dest'];
 		$thisid   = $result['dynroute_id'];
-		if ($result['default_dest']=='y') $sel='Default'; else $sel=$result['selection';
+		if ($result['default_dest']=='y') $sel='Default'; else $sel=$result['selection'];
 		$destlist[] = array(
 			'dest' => $thisdest,
-			'description' => sprintf(_("Route: %s / Option: %s"),$result['displayname'],$sel]),
+			'description' => sprintf(_("Route: %s / Option: %s"),$result['displayname'],$sel),
 			'edit_url' => 'config.php?display=dynroute&action=edit&id='.urlencode($thisid),
 		);
 	}
