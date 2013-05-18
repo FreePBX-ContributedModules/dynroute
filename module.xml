@@ -1,7 +1,7 @@
 <module>
 	<rawname>dynroute</rawname>
 	<name>Dynamic Routes</name>
-	<version>2.10.0.2</version>
+	<version>2.11.0.0</version>
 	<publisher>FreePBX</publisher>
 	<license>GPLv2+</license>
 	<type>setup</type>
@@ -18,12 +18,18 @@
 		*2.6.0.2* First Release
 	</changelog>
 	<depends>
-		<version>ge2.10</version>
+		<version>ge2.8</version>
 		<module></module>
 	</depends>
 	<menuitems>
 		<dynroute>Dynamic Routes</dynroute>
 	</menuitems>
-	<location>contributed_modules/release/dynroute-2.10.0.2.tgz</location>
+        <popovers>
+                <dynroute>
+                        <display>dynroute</display>
+			<action>add</action>
+                </dynroute>
+        </popovers>
+	<location>contributed_modules/release/dynroute-2.11.0.0.tgz</location>
 	<md5sum>045d0cf1961d0287d63d45a2593637ea</md5sum>
 </module>

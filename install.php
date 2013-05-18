@@ -124,7 +124,7 @@ if(DB::IsError($check)) {
         // add new field
         $sql = "ALTER TABLE dynroute_dests ADD COLUMN `default_dest` CHAR(1) default 'n';";
         $result = $db->query($sql);
-        if(DB::IsError($result)) { die_freepbx($result->getDebugInfo());
+        if(DB::IsError($result)) { die_freepbx($result->getDebugInfo()); }
 	$sql = "UPDATE dynroute_dests set default_dest='y',selection='' WHERE selection='default';";
 	$result = $db->query($sql);
         if(DB::IsError($result)) { die_freepbx($result->getDebugInfo()); }
