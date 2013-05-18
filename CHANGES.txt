@@ -1,3 +1,8 @@
+2013 05 18
+	- Cosmetic changes to interface and texts
+	- Updated Dutch translations
+	- Added Italian translations
+
 2013 05 17
 	- Added field for specifying default destination instead of having to use match value 'default' in the options section
 

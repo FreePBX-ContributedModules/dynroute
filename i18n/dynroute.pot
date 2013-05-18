@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreePBX dynroute module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-02 09:45+0200\n"
+"POT-Creation-Date: 2013-05-18 13:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,10 +29,10 @@ msgid "Dynamic route: %s"
 msgstr ""
 
 #, php-format
-msgid "Route: %s / Option: %s"
+msgid "Route: %s / Destination: %s"
 msgstr ""
 
-msgid "Routing"
+msgid "Dynamic Routing"
 msgstr ""
 
 msgid "Instructions"
@@ -41,66 +41,10 @@ msgstr ""
 msgid "You use the Dynamic Routing module to route calls based on sql lookup."
 msgstr ""
 
-msgid ""
-"It is also possible to request user input (dtmf) and then use that in the "
-"query too."
-msgstr ""
-
-msgid "Optionally an announcement can be played before reading dtmf."
-msgstr ""
-
-msgid ""
-"You need to specify hostname, database name, username and password for mysql "
-"server."
-msgstr ""
-
-msgid ""
-"In the query you can use the special string [NUMBER] to be substituted by "
-"the incoming callerid number"
-msgstr ""
-
-msgid "or the special string [INPUT] to be substituted by the captured dtmf."
-msgstr ""
-
-msgid ""
-"The selected field returned from the query is matched against the options "
-"text to decide which destination to use."
-msgstr ""
-
-msgid ""
-"Optionally you may define variable names in order to capture the dtmf input "
-"and / or query result. Those variables may"
-msgstr ""
-
-msgid ""
-"be used later on a further pass through a dynroute inside the query string "
-"be enclosing in [] or in custom destinations."
-msgstr ""
-
-msgid ""
-"When refering to the variables in custom destinations (typically to pass to "
-"an agi script) DYNROUTE_ is prefixed to the variable name."
-msgstr ""
-
-msgid ""
-"You should define an option named default which will be used if no match is "
-"found. If you do not the call will be hang up on no match."
-msgstr ""
-
-msgid ""
-"If you have defined a default option you may also omit the mysql hostname "
-"and other parameters in order to bypass a query and"
-msgstr ""
-
-msgid ""
-"procede with the default action. This is useful if you only want to capture "
-"dtmf into a variable without a mysql lookup."
+msgid "For configuration instructions see http://www.voipsupport.it/"
 msgstr ""
 
 msgid "Add Route"
-msgstr ""
-
-msgid "Dynamic Routes"
 msgstr ""
 
 msgid "Edit Menu"
@@ -140,12 +84,20 @@ msgid ""
 "the call (e.g. futher dynamic route query or to pass to agi script)"
 msgstr ""
 
+msgid "Result Variable"
+msgstr ""
+
+msgid ""
+"Optional variable name if you want the query result to be available later in "
+"the call (e.g. futher dynamic route query or to pass to agi script)"
+msgstr ""
+
 msgid "Announcement"
 msgstr ""
 
 msgid ""
 "Message to be played to the caller. To add additional recordings please use "
-"the \"System Recordings\" MENU to the left"
+"the \"System Recordings\" MENU above"
 msgstr ""
 
 msgid "None"
@@ -154,6 +106,35 @@ msgstr ""
 msgid ""
 "Message to be played to the caller.<br><br>You must install and enable the "
 "\"Systems Recordings\" Module to edit this option"
+msgstr ""
+
+msgid "Source type"
+msgstr ""
+
+msgid ""
+"Select the source type, you can choose between:<ul><li>MySQL: It queries a "
+"MySQL database to retrieve the routing information</li><li>ODBC: It queries "
+"an ODBC data source to retrieve the routing information</li></ul>"
+msgstr ""
+
+msgid "ODBC"
+msgstr ""
+
+msgid "Function"
+msgstr ""
+
+msgid ""
+"Name of the odbc function (excluding ODBC prefix) in /etc/asterisk/func_odbc."
+"conf"
+msgstr ""
+
+msgid "Query"
+msgstr ""
+
+msgid "The query which gets the result out of the database"
+msgstr ""
+
+msgid "MySQL"
 msgstr ""
 
 msgid "Host"
@@ -180,30 +161,28 @@ msgstr ""
 msgid "The password wich is needed to access the database"
 msgstr ""
 
-msgid "Query"
-msgstr ""
-
 msgid "The query wich gets the result out of the database"
 msgstr ""
 
-msgid "Result Variable"
-msgstr ""
-
-msgid ""
-"Optional variable name if you want the query result to be available later in "
-"the call (e.g. futher dynamic route query or to pass to agi script)"
-msgstr ""
-
-msgid "Increase Options"
+msgid "Increase Destinations"
 msgstr ""
 
 msgid "Save"
 msgstr ""
 
-msgid "Decrease Options"
+msgid "Decrease Destinations"
 msgstr ""
 
-msgid "Invalid option"
+msgid "Match"
+msgstr ""
+
+msgid "Destination"
+msgstr ""
+
+msgid "Default destination"
+msgstr ""
+
+msgid "Invalid destination"
 msgstr ""
 
 msgid "Leave blank to remove"

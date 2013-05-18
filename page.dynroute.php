@@ -223,24 +223,27 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 		<tr><td colspan=2><hr /></td></tr>
 		<tr><td colspan=2>
 
-			<input name="increase" type="submit" value="<?php echo _("Increase Options")?>">
+			<input name="increase" type="submit" value="<?php echo _("Increase Destinations")?>">
 			&nbsp;
 			<input name="Submit" type="submit" value="<?php echo _("Save")?>" tabindex="<?php echo ++$tabindex;?>">
 			&nbsp;
 			<?php if ($nbroptions > 1) { ?>
-			<input name="decrease" type="submit" value="<?php echo _("Decrease Options")?>">
+			<input name="decrease" type="submit" value="<?php echo _("Decrease Destinations")?>">
 			<?php } ?>
 		</td>
 	</tr>
 	<tr><td colspan=2><hr /></td></tr>
+	<tr><th><?php echo _("Match")?></th><?php echo _("Destination")?><th></th></tr>
 <?php
+
 	// Draw the destinations
+
 	$default_dest_row = dynroute_get_dests($id,'y');
 	if (!empty($default_dest_row)) $default_dest=$default_dest_row[0]['dest']; else $default_dest='';
 	$count = 0;
 ?>
 	<tr>
-	<td style="text-align:right;">Default destination</td>
+	<td style="text-align:right;"><?php echo _("Default destination")?></td>
 	<td> <table> <?php echo drawselects($default_dest,$count++); ?> </table> </td>
 
 	</tr>	
@@ -267,12 +270,12 @@ function dynroute_show_edit($id, $nbroptions, $post) {
 	global $module_hook;
 	echo $module_hook->hookHtml;
 ?>
-	<input name="increase" type="submit" value="<?php echo _("Increase Options")?>">
+	<input name="increase" type="submit" value="<?php echo _("Increase Destinations")?>">
 	&nbsp;
 	<input name="Submit" type="submit" value="<?php echo _("Save")?>">
 	&nbsp;
 	<?php if ($nbroptions > 1) { ?>
-	<input name="decrease" type="submit" value="<?php echo _("Decrease Options")?>">
+	<input name="decrease" type="submit" value="<?php echo _("Decrease Destinations")?>">
 	<?php } ?>
 	
 	<script language="javascript">
@@ -282,7 +285,7 @@ var theForm = document.prompt;
 theForm.displayname.focus();
 
 	function prompt_onsubmit() {
-		var msgInvalidOption = "<?php echo _("Invalid option"); ?>";
+		var msgInvalidOption = "<?php echo _("Invalid destination"); ?>";
 		
 		defaultEmptyOK = true;
 
