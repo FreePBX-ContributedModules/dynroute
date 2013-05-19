@@ -116,11 +116,11 @@ function dynroute_get_config($engine) {
 		                                                  );
 							$query = str_replace(array_keys($replacements), array_values($replacements), $item['mysql_query']);
 						} else {
-							$query = $item['mysql_query'];
+							$query = str_replace('"','\"',$item['mysql_query']);
 						}
 					}
 					if ($item['sourcetype']=='odbc') {
-						$query = $item['odbc_query'];
+						$query = str_replace('"','\"',$item['odbc_query']);
 					}
                                         $query = str_replace('[NUMBER]', '${CALLERID(num)}', $query);
                                         $query = str_replace('[INPUT]', '${dtmfinput}', $query);
