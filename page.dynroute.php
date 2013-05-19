@@ -28,21 +28,29 @@ switch ($action) {
 			sql("DELETE from dynroute where dynroute_id='$id'");
 			sql("DELETE FROM dynroute_dests where dynroute_id='$id'");
 			needreload();
+			redirect_standard();
 		} else {
 			dynroute_do_edit($id, $_POST);
-			dynroute_sidebar($id);
-			if (isset($_REQUEST['increase'])) 
-				$nbroptions++;
-			if (isset($_REQUEST['decrease'])) {
-				$nbroptions--;
-			}
-			if ($nbroptions < 1)
-				$nbroptions = 1;
-			$url = 'config.php?type=setup&display=dynroute&action=edit&id='.$id.'&nbroptions='.$nbroptions;
 			needreload();
-			redirect($url);
-			break;
+			$_REQUEST['id']=$id;
+			if (isset($_REQUEST['increase']) || isset($_REQUEST['decrease'])) {
+
+				if (isset($_REQUEST['increase'])) 
+					$nbroptions++;
+				if (isset($_REQUEST['decrease'])) {
+					$nbroptions--;
+				}
+				if ($nbroptions < 1)
+					$nbroptions = 1;
+				$_REQUEST['action']='edit';
+				$_REQUEST['nbroptions']=$nbroptions;
+				redirect_standard('id','action','nbroptions');
+			}
+			else  {
+				redirect_standard('id');
+			}
 		}
+		break;
 	default:
 		dynroute_sidebar($id);
 ?>
