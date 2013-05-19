@@ -1,3 +1,8 @@
+2013 05 19
+	- popover compatibility - now seems to be ok but more testing would be useful
+	- fixed some issue with double quotes in the mysql and odbc queries so they display properly and are escaped in the configuration files
+	- 2.11.0.0 beta
+
 2013 05 18
 	- Cosmetic changes to interface and texts
 	- Updated Dutch translations
