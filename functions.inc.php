@@ -157,6 +157,10 @@ function dynroute_get_config($engine) {
 						if ($item['chan_var_name_res'] != '')
 							$ext->add($id, 's', '', new ext_setvar('__DYNROUTE_'.$item['chan_var_name_res'], '${dynroute}'));
                                         }
+					if ($item['sourcetype']=='none' && $item['enable_dtmf_input']=='CHECKED')
+                                        {
+                                                $ext->add($id, 's', '', new ext_setvar('dynroute','${dtmfinput}'));
+                                        }
 					$dests = dynroute_get_dests($item['dynroute_id'],'n');
 					if (!empty($dests)) {
 						foreach($dests as $dest) {

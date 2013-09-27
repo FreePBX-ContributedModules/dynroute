@@ -1,3 +1,6 @@
+2013 09 26
+	- if there is no query but dtmf input is checked, branch to destinations based on dtmf instead of query result
+
 2013 05 19
 	- popover compatibility - now seems to be ok but more testing would be useful
 	- fixed some issue with double quotes in the mysql and odbc queries so they display properly and are escaped in the configuration files
