@@ -14,6 +14,3 @@ CREATE TABLE `customer_routing` (
   PRIMARY KEY (`customer_routing_id`),
   KEY `callerid` (`callerid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
