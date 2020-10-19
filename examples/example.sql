@@ -1,3 +1,5 @@
+; Copyright (c) 2009-2017 John Fawcett
+
 ; Examples to create database and table for 
 ; testing dynamic routing
 
@@ -14,3 +16,6 @@ CREATE TABLE `customer_routing` (
   PRIMARY KEY (`customer_routing_id`),
   KEY `callerid` (`callerid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
