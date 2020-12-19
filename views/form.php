@@ -7,7 +7,7 @@
 extract($request, EXTR_SKIP);
 if($action == 'add'){
 	$heading = _("Add Dynamic Route");
-	$deet = array('id', 'name', 'description', 'sourcetype',
+	$deet = array('id', 'name', 'description', 'sourcetype','enable_substitutions',
 				'mysql_host','mysql_dbname','mysql_query','mysql_username','mysql_password',
 				'odbc_func','odbc_query','url_query','agi_query','agi_var_name_res',
 				'astvar_query','enable_dtmf_input','max_digits','timeout','announcement_id',
@@ -16,7 +16,7 @@ if($action == 'add'){
 				'invalid_dest','default_dest'
 				);
 
-	//keep vairables set on new dymaic routes
+	//set defaults on new dymaic routes
 	foreach ($deet as $d) {
 		switch ($d){
 			case 'announcement_id':
@@ -30,6 +30,9 @@ if($action == 'add'){
 				break;
 			case 'max_digits':
 				$dynroute[$d] = 0;
+				break;
+			case 'enable_substitutions':
+				$dynroute[$d] = 'CHECKED';
 				break;
 			default:
 			$dynroute[$d] = '';
@@ -471,6 +474,33 @@ foreach ($hooks as $key => $value) {
 								</div>
 							</div>
 							<!--END Source Type-->
+							<!--Enable Substitutions-->
+							<div class="element-container">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="row">
+											<div class="form-group">
+												<div class="col-md-3">
+													<label class="control-label" for="enable_substitutions"><?php echo _("Enable substitutions") ?></label>
+													<i class="fa fa-question-circle fpbx-help-icon" data-for="enable_substitutions"></i>
+												</div>
+												<div class="col-md-9 radioset">
+													<input type="radio" name="enable_substitutions" id="substyes" value="CHECKED" <?php echo ($dynroute['enable_substitutions']=='CHECKED'?'CHECKED':'') ?>>
+													<label for="substyes"><?php echo _("Yes");?></label>
+													<input type="radio" name="enable_substitutions" id="substno" value="" <?php echo ($dynroute['enable_substitutions']=='CHECKED'?'':'CHECKED') ?>>
+													<label for="substno"><?php echo _("No");?></label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<span id="enable_substitutions-help" class="help-block fpbx-help-block"><?php echo _("Enable variable substitutions in the lookup query. You probably want to disable this if using REGEX in Asterisk varibales.")?></span>
+									</div>
+								</div>
+							</div>
+							<!--End Enable substitutions-->
 							<!--Mysql host-->
 							<div class="element-container src_mysql">
 								<div class="row">

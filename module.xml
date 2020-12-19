@@ -39,6 +39,7 @@
 			<field name="name" type="string" length="255"/>
 			<field name="description" type="text" length=""/>
 			<field name="sourcetype" type="string" length="100" notnull="false"/>
+			<field name="enable_substitutions" type="string" length="8" default="CHECKED"/>
 			<field name="mysql_host" type="string" length="60" notnull="false"/>
 			<field name="mysql_dbname" type="string" length="60" notnull="false"/>
 			<field name="mysql_query" type="text" length="" notnull="false"/>

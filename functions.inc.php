@@ -72,12 +72,16 @@ function dynroute_get_config($engine) {
 
 				// variable substitutions
 
-				$query = str_replace('[NUMBER]', '${CALLERID(num)}', $query);
-				$query = str_replace('[INPUT]', '${dtmfinput}', $query);
-				$query = str_replace('[DID]', '${FROM_DID}', $query);
-				$query = preg_replace('/\[([^\]]*)\]/','${DYNROUTE_$1}',$query);
-				$announcement_id = (isset($dynroute['announcement_id']) ? $dynroute['announcement_id'] : '0');
+                                if ($dynroute['enable_substitutions']=='CHECKED')
+                                {
+					$query = str_replace('[NUMBER]', '${CALLERID(num)}', $query);
+					$query = str_replace('[INPUT]', '${dtmfinput}', $query);
+					$query = str_replace('[DID]', '${FROM_DID}', $query);
+					$query = preg_replace('/\[([^\]]*)\]/','${DYNROUTE_$1}',$query);
+				}
 					
+				$announcement_id = (isset($dynroute['announcement_id']) ? $dynroute['announcement_id'] : '0');
+
 				if ($dynroute['enable_dtmf_input']=='CHECKED')
 				{
                                 	$ext->add($c, 's', '', new ext_setvar('__DYNROUTE_RETRIES', '0'));
@@ -217,7 +221,7 @@ function dynroute_configprocess(){
 	if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'dynroute'){
 		global $db;
 		//get variables
-		$get_var = array('id', 'name', 'description', 'sourcetype',
+		$get_var = array('id', 'name', 'description', 'sourcetype','enable_substitutions',
 				'mysql_host','mysql_dbname','mysql_query','mysql_username','mysql_password',
 				'odbc_func','odbc_query','url_query','agi_query','agi_var_name_res',
 				'astvar_query','enable_dtmf_input','max_digits','timeout','announcement_id',
