@@ -4,6 +4,7 @@
 // The original file was published by Sagoma Technologies in
 // Freepbx IVR module
 namespace FreePBX\modules;
+use PDO;
 class Dynroute extends \FreePBX_Helpers implements \BMO {
 	public function __construct($freepbx = null) {
 		if ($freepbx == null) {
@@ -30,7 +31,6 @@ class Dynroute extends \FreePBX_Helpers implements \BMO {
 			);
 		}
 	}
-
 	public function getDetails($id = false) {
 		$sql = 'SELECT * FROM dynroute';
 		if ($id) {
@@ -81,31 +81,31 @@ class Dynroute extends \FreePBX_Helpers implements \BMO {
 		return \FreePBX::Hooks()->processHooks($request);
 	}
 	public function ajaxRequest($req, &$setting) {
-	switch ($req) {
-		case 'getJSON':
-			return true;
-		break;
-		default:
-			return false;
-		break;
+		switch ($req) {
+			case 'getJSON':
+				return true;
+			break;
+			default:
+				return false;
+			break;
+		}
 	}
-}
-public function ajaxHandler(){
-	switch ($_REQUEST['command']) {
-		case 'getJSON':
-			switch ($_REQUEST['jdata']) {
-				case 'grid':
-					$dynroutes = $this->getDetails();
-					$ret = array();
-					foreach ($dynroutes as $r) {
-						$r['name'] = $r['name'] ? $r['name'] : 'Dynamic Route ID: ' . $r['id'];
-						$ret[] = array(
+	public function ajaxHandler(){
+		switch ($_REQUEST['command']) {
+			case 'getJSON':
+				switch ($_REQUEST['jdata']) {
+					case 'grid':
+						$dynroutes = $this->getDetails();
+						$ret = array();
+						foreach ($dynroutes as $r) {
+							$r['name'] = $r['name'] ? $r['name'] : 'Dynamic Route ID: ' . $r['id'];
+							$ret[] = array(
 								'name' => $r['name'],
 								'description' => $r['description'],
 								'id' => $r['id'],
 								'link' => array($r['id'],$r['name'])
 							);
-					}
+						}
 					return $ret;
 					break;
 					default:
@@ -117,5 +117,21 @@ public function ajaxHandler(){
 				return false;
 			break;
 		}
+	}
+        public function getAllDetails() {
+		$final = [];
+		$all = $this->db->query('SELECT * FROM dynroute ORDER BY name',PDO::FETCH_ASSOC);
+		foreach ($all as $item) {
+			$final[$item['id']][] = $item;
+		}
+		return $final;
+	}
+	public function getAllEntries(){
+		$final = [];
+                $all = $this->db->query('SELECT * FROM dynroute_dests',PDO::FETCH_ASSOC);
+		foreach ($all as $item){
+			$final[$item['dynroute_id']][] = $item;
+		}
+		return $final;
 	}
 }

@@ -175,7 +175,7 @@ function dynroute_get_details($id = '') {
 	return FreePBX::Dynroute()->getDetails($id);
 }
 
-//get all dynroute entires
+//get all dynroute entries
 function dynroute_get_entries($id) {
 	global $db;
 
@@ -308,7 +308,7 @@ function dynroute_save_details($vals){
 	return $vals['id'];
 }
 
-//save dynroute entires
+//save dynroute entries
 function dynroute_save_entries($id, $entries){
 	global $db;
 	$id = $db->escapeSimple($id);
@@ -319,10 +319,10 @@ function dynroute_save_entries($id, $entries){
 			//make sure there is an extension & goto set - otherwise SKIP IT
 			if (trim($entries['ext'][$i]) != '' && $entries['goto'][$i]) {
 				$d[] = array(
-							'dynroute_id'	=> $id,
-							'selection' 	=> $entries['ext'][$i],
-							'dest'		=> $entries['goto'][$i],
-						);
+						'dynroute_id'	=> $id,
+						'selection' 	=> $entries['ext'][$i],
+						'dest'		=> $entries['goto'][$i],
+				);
 			}
 
 		}
@@ -332,9 +332,36 @@ function dynroute_save_entries($id, $entries){
 			die_freepbx($res->getDebugInfo());
 		}
 	}
-
 	return true;
 }
+
+//restore dynroute entries
+function dynroute_restore_entries($id, $entries){
+	global $db;
+	$id = $db->escapeSimple($id);
+	$sql = 'DELETE FROM dynroute_dests WHERE dynroute_id = "' . $id . '"';
+	$sth = $db->query($sql);
+	if ($entries) {
+		for ($i = 0; $i < count($entries); $i++) {
+		//make sure there is selection and dest otherwise SKIP IT
+			if (trim($entries[$i]['selection']) != '' && $entries[$i]['dest'] !='') {
+				$d[] = array(
+					'dynroute_id'   => $id,
+					'selection'     => $entries[$i]['selection'],
+					'dest'          => $entries[$i]['dest'],
+				);
+			}
+		}
+		$sql = $db->prepare('INSERT INTO dynroute_dests VALUES (?, ?, ?)');
+		$res = $db->executeMultiple($sql, $d);
+		if ($db->IsError($res)){
+			die_freepbx($res->getDebugInfo());
+		}
+	}
+	return true;
+}
+
+
 
 //draw dynamic route entires table header
 function dynroute_draw_entries_table_header_dynroute() {
