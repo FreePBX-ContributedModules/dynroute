@@ -6,7 +6,7 @@
 # Copyright (C) 2008-2020 Sangoma Technologies, Inc.
 msgid ""
 msgstr ""
-"Project-Id-Version: FreePBX dynroute module\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-19 04:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
