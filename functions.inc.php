@@ -1,6 +1,6 @@
 <?php
 if (!defined('FREEPBX_IS_AUTH')) { die('No direct script access allowed'); }
-// Copyright (c) 2015-2017 John Fawcett
+// Copyright (c) 2015-2020 John Fawcett
 // This is a dervied work licenced under GPL V3 or later
 // The original file was published by Sagoma Technologies in
 // Freepbx IVR module
@@ -72,12 +72,16 @@ function dynroute_get_config($engine) {
 
 				// variable substitutions
 
-				$query = str_replace('[NUMBER]', '${CALLERID(num)}', $query);
-				$query = str_replace('[INPUT]', '${dtmfinput}', $query);
-				$query = str_replace('[DID]', '${FROM_DID}', $query);
-				$query = preg_replace('/\[([^\]]*)\]/','${DYNROUTE_$1}',$query);
-				$announcement_id = (isset($dynroute['announcement_id']) ? $dynroute['announcement_id'] : '0');
+				if ($dynroute['enable_substitutions']=='CHECKED')
+				{
+					$query = str_replace('[NUMBER]', '${CALLERID(num)}', $query);
+					$query = str_replace('[INPUT]', '${dtmfinput}', $query);
+					$query = str_replace('[DID]', '${FROM_DID}', $query);
+					$query = preg_replace('/\[([^\]]*)\]/','${DYNROUTE_$1}',$query);
+				}
 					
+				$announcement_id = (isset($dynroute['announcement_id']) ? $dynroute['announcement_id'] : '0');
+
 				if ($dynroute['enable_dtmf_input']=='CHECKED')
 				{
                                 	$ext->add($c, 's', '', new ext_setvar('__DYNROUTE_RETRIES', '0'));
@@ -175,7 +179,7 @@ function dynroute_get_details($id = '') {
 	return FreePBX::Dynroute()->getDetails($id);
 }
 
-//get all dynroute entires
+//get all dynroute entries
 function dynroute_get_entries($id) {
 	global $db;
 
@@ -217,7 +221,7 @@ function dynroute_configprocess(){
 	if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'dynroute'){
 		global $db;
 		//get variables
-		$get_var = array('id', 'name', 'description', 'sourcetype',
+		$get_var = array('id', 'name', 'description', 'sourcetype','enable_substitutions',
 				'mysql_host','mysql_dbname','mysql_query','mysql_username','mysql_password',
 				'odbc_func','odbc_query','url_query','agi_query','agi_var_name_res',
 				'astvar_query','enable_dtmf_input','max_digits','timeout','announcement_id',
@@ -238,9 +242,9 @@ function dynroute_configprocess(){
 		$vars['chan_var_name_res'] = empty($vars['chan_var_name_res']) ? '' : $vars['chan_var_name_res'];
 		$vars['validation_regex'] = empty($vars['validation_regex']) ? '' : $vars['validation_regex'];
 		$vars['max_retries'] = empty($vars['max_retries']) ? '0' : $vars['max_retries'];
-		$vars['invalid_retry_rec_id'] = empty($vars['invalid_retry_rec_id']) || $vars['invalid_retry_rec_id'] == 'None' ? '0' : $vars['invalid_retry_rec_id'];
-		$vars['invalid_rec_id'] = empty($vars['invalid_rec_id']) || $vars['invalid_rec_id'] == 'None' ? '0' : $vars['invalid_rec_id'];
-		$vars['announcement_id'] = empty($vars['announcement_id']) || $vars['announcement_id'] == 'None' ? '0' : $vars['announcement_id'];
+		$vars['invalid_retry_rec_id'] = empty($vars['invalid_retry_rec_id']) || !is_numeric($vars['invalid_retry_rec_id']) ? '0' : $vars['invalid_retry_rec_id'];
+		$vars['invalid_rec_id'] = empty($vars['invalid_rec_id']) || !is_numeric($vars['invalid_rec_id']) ? '0' : $vars['invalid_rec_id'];
+		$vars['announcement_id'] = empty($vars['announcement_id']) || !is_numeric($vars['announcement_id']) ? '0' : $vars['announcement_id'];
 
 		$action		= isset($_REQUEST['action'])	? $_REQUEST['action']	: '';
 		$entries	= isset($_REQUEST['entries'])	? $_REQUEST['entries']	: '';
@@ -308,7 +312,7 @@ function dynroute_save_details($vals){
 	return $vals['id'];
 }
 
-//save dynroute entires
+//save dynroute entries
 function dynroute_save_entries($id, $entries){
 	global $db;
 	$id = $db->escapeSimple($id);
@@ -319,10 +323,10 @@ function dynroute_save_entries($id, $entries){
 			//make sure there is an extension & goto set - otherwise SKIP IT
 			if (trim($entries['ext'][$i]) != '' && $entries['goto'][$i]) {
 				$d[] = array(
-							'dynroute_id'	=> $id,
-							'selection' 	=> $entries['ext'][$i],
-							'dest'		=> $entries['goto'][$i],
-						);
+						'dynroute_id'	=> $id,
+						'selection' 	=> $entries['ext'][$i],
+						'dest'		=> $entries['goto'][$i],
+				);
 			}
 
 		}
@@ -332,9 +336,36 @@ function dynroute_save_entries($id, $entries){
 			die_freepbx($res->getDebugInfo());
 		}
 	}
-
 	return true;
 }
+
+//restore dynroute entries
+function dynroute_restore_entries($id, $entries){
+	global $db;
+	$id = $db->escapeSimple($id);
+	$sql = 'DELETE FROM dynroute_dests WHERE dynroute_id = "' . $id . '"';
+	$sth = $db->query($sql);
+	if ($entries) {
+		for ($i = 0; $i < count($entries); $i++) {
+		//make sure there is selection and dest otherwise SKIP IT
+			if (trim($entries[$i]['selection']) != '' && $entries[$i]['dest'] !='') {
+				$d[] = array(
+					'dynroute_id'   => $id,
+					'selection'     => $entries[$i]['selection'],
+					'dest'          => $entries[$i]['dest'],
+				);
+			}
+		}
+		$sql = $db->prepare('INSERT INTO dynroute_dests VALUES (?, ?, ?)');
+		$res = $db->executeMultiple($sql, $d);
+		if ($db->IsError($res)){
+			die_freepbx($res->getDebugInfo());
+		}
+	}
+	return true;
+}
+
+
 
 //draw dynamic route entires table header
 function dynroute_draw_entries_table_header_dynroute() {
