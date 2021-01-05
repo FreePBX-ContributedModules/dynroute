@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dynamic Routing\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-19 15:37+0530\n"
+"POT-Creation-Date: 2021-01-05 05:22+0000\n"
 "PO-Revision-Date: 2013-05-19 23:13+0100\n"
 "Last-Translator: John Fawcett <john@voipsupport.it>\n"
 "Language-Team: cDGo IT Consultancy <info@cdgo.nl>\n"
@@ -22,15 +22,15 @@ msgid ""
 "Asterisk to be running and have proper credentials"
 msgstr ""
 
-#: views/form.php:681
+#: views/form.php:711
 msgid "AGI Lookup"
 msgstr ""
 
-#: views/form.php:705
+#: views/form.php:735
 msgid "AGI Result Variable"
 msgstr ""
 
-#: views/form.php:693
+#: views/form.php:723
 msgid ""
 "AGI to use to obtain the result (it must return text only, no html, xml or "
 "json. For example test.agi,param1,param2 The following substitutions are "
@@ -48,23 +48,27 @@ msgstr ""
 msgid "Add Dynamic Route"
 msgstr ""
 
-#: views/form.php:187
+#: views/form.php:190
 msgid "Allows input of DTMF"
 msgstr ""
 
-#: views/form.php:261
+#: views/form.php:264
 msgid "Amount of time in seconds for dtmf timeout"
 msgstr ""
 
-#: views/form.php:199
+#: views/form.php:202
 msgid "Announcement"
 msgstr "Aankondiging bericht"
 
-#: views/form.php:729
+#: dynroute.i18n.php:6
+msgid "Applications"
+msgstr ""
+
+#: views/form.php:759
 msgid "Asterisk Variable"
 msgstr ""
 
-#: views/form.php:741
+#: views/form.php:771
 msgid ""
 "Asterisk variable whose value is to be used. The following substitutions are "
 "available:<br>[NUMBER] the callerid number<br>[INPUT] the dtmf sequence "
@@ -76,15 +80,15 @@ msgstr ""
 msgid "Connection Error"
 msgstr ""
 
-#: views/form.php:517
+#: views/form.php:547
 msgid "Database to connect to on MySQL server"
 msgstr ""
 
-#: views/form.php:762
+#: views/form.php:792
 msgid "Default Destination"
 msgstr ""
 
-#: Dynroute.class.php:59 functions.inc.php:341
+#: Dynroute.class.php:59 functions.inc.php:372
 msgid "Delete"
 msgstr "Verwijder"
 
@@ -96,21 +100,21 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: views/form.php:155
+#: views/form.php:158
 msgid "Description of this Dynamic Route"
 msgstr ""
 
-#: functions.inc.php:341
+#: functions.inc.php:372
 msgid "Destination"
 msgstr "Bestemming"
 
-#: views/form.php:385
+#: views/form.php:388
 msgid ""
 "Destination to send the call to if the dtmf did not match the validation "
 "rule and maximum retries has been reached"
 msgstr ""
 
-#: views/form.php:774
+#: views/form.php:804
 msgid ""
 "Destination to send the call to if there is no match in the Dynamic Route "
 "Entries section below or if the lookup fails."
@@ -120,27 +124,27 @@ msgstr ""
 msgid "Dyname Route Name"
 msgstr ""
 
-#: Dynroute.class.php:27 page.dynroute.php:29
+#: Dynroute.class.php:28 page.dynroute.php:29
 msgid "Dynamic Route"
 msgstr ""
 
-#: views/form.php:162
+#: views/form.php:165
 msgid "Dynamic Route DTMF Options"
 msgstr ""
 
-#: views/form.php:752
+#: views/form.php:782
 msgid "Dynamic Route Default Entry"
 msgstr ""
 
-#: views/form.php:143
+#: views/form.php:146
 msgid "Dynamic Route Description"
 msgstr ""
 
-#: views/form.php:781
+#: views/form.php:811
 msgid "Dynamic Route Entries"
 msgstr ""
 
-#: views/form.php:109
+#: views/form.php:112
 msgid "Dynamic Route General Options"
 msgstr ""
 
@@ -148,29 +152,33 @@ msgstr ""
 msgid "Dynamic Route List"
 msgstr ""
 
-#: views/form.php:445
+#: views/form.php:448
 msgid "Dynamic Route Lookup Source"
 msgstr ""
 
-#: views/form.php:119
+#: views/form.php:122
 msgid "Dynamic Route Name"
 msgstr ""
 
-#: views/form.php:392
+#: views/form.php:395
 msgid "Dynamic Route Saved Variables"
 msgstr ""
 
-#: functions.inc.php:436 functions.inc.php:456
+#: functions.inc.php:467 functions.inc.php:487
 #, php-format
 msgid "Dynamic Route: %s"
 msgstr ""
 
-#: functions.inc.php:402
+#: functions.inc.php:433
 #, php-format
 msgid "Dynamic Route: %s / Option: %s"
 msgstr ""
 
-#: views/form.php:41
+#: dynroute.i18n.php:4 dynroute.i18n.php:10
+msgid "Dynamic Routes"
+msgstr ""
+
+#: views/form.php:44
 msgid "Edit Dynamic Route: "
 msgstr ""
 
@@ -178,31 +186,41 @@ msgstr ""
 msgid "Edit:"
 msgstr ""
 
-#: views/form.php:172
+#: views/form.php:175
 msgid "Enable DTMF Input"
 msgstr ""
 
-#: views/form.php:213
+#: views/form.php:484
+msgid "Enable substitutions"
+msgstr ""
+
+#: views/form.php:499
+msgid ""
+"Enable variable substitutions in the lookup query. You probably want to "
+"disable this if using REGEX in Asterisk varibales."
+msgstr ""
+
+#: views/form.php:216
 msgid "Greeting to be played on entry to the Dynamic Route."
 msgstr ""
 
-#: views/form.php:493
+#: views/form.php:523
 msgid "Hostname of MySQL server"
 msgstr ""
 
-#: views/form.php:373
+#: views/form.php:376
 msgid "Invalid Destination"
 msgstr ""
 
-#: views/form.php:347
+#: views/form.php:350
 msgid "Invalid Recording"
 msgstr ""
 
-#: views/form.php:297
+#: views/form.php:300
 msgid "Invalid Retries"
 msgstr ""
 
-#: views/form.php:321
+#: views/form.php:324
 msgid "Invalid Retry Recording"
 msgstr ""
 
@@ -210,49 +228,49 @@ msgstr ""
 msgid "List Dynamc Routes"
 msgstr ""
 
-#: functions.inc.php:341
+#: functions.inc.php:372
 msgid "Match"
 msgstr "Geëvenaard resultaat"
 
-#: views/form.php:225
+#: views/form.php:228
 msgid "Max digits"
 msgstr ""
 
-#: views/form.php:237
+#: views/form.php:240
 msgid ""
 "Maximum number of DTMF digits. If zero then no limit. Avoids having to press "
 "# key at end of fixed input length."
 msgstr ""
 
-#: views/form.php:505
+#: views/form.php:535
 msgid "MySQL database"
 msgstr ""
 
-#: views/form.php:481
+#: views/form.php:511
 msgid "MySQL hostname"
 msgstr ""
 
-#: views/form.php:553
+#: views/form.php:583
 msgid "MySQL password"
 msgstr ""
 
-#: views/form.php:577
+#: views/form.php:607
 msgid "MySQL query"
 msgstr ""
 
-#: views/form.php:529
+#: views/form.php:559
 msgid "MySQL username"
 msgstr ""
 
-#: views/form.php:717
+#: views/form.php:747
 msgid "Name of result variable used in AGI script."
 msgstr ""
 
-#: views/form.php:131
+#: views/form.php:134
 msgid "Name of this Dynamic Route"
 msgstr ""
 
-#: views/form.php:414
+#: views/form.php:417
 msgid ""
 "Name of variable in which to save dtmf input for future use in the dialplan "
 "or further dynamic routes. This is available as [xxx] in the query/lookup "
@@ -261,7 +279,7 @@ msgid ""
 "DYNROUTE_ e.g. DYNROUTE_xxx"
 msgstr ""
 
-#: views/form.php:438
+#: views/form.php:441
 msgid ""
 "Name of variable in which to save lookup result for future use in the "
 "dialplan or further dynamic routes. This is available as [xxx] in the query/"
@@ -270,7 +288,7 @@ msgid ""
 "prefix it with DYNROUTE_ e.g. DYNROUTE_xxx"
 msgstr ""
 
-#: views/form.php:179
+#: views/form.php:182 views/form.php:491
 msgid "No"
 msgstr ""
 
@@ -278,19 +296,19 @@ msgstr ""
 msgid "No Astman, Not loading Dynroute"
 msgstr ""
 
-#: views/form.php:59 views/form.php:64 views/form.php:69
+#: views/form.php:62 views/form.php:67 views/form.php:72
 msgid "None"
 msgstr ""
 
-#: views/form.php:309
+#: views/form.php:312
 msgid "Number of times to retry when dtmf does not match validation rules"
 msgstr ""
 
-#: views/form.php:605
+#: views/form.php:635
 msgid "ODBC Function"
 msgstr ""
 
-#: views/form.php:617
+#: views/form.php:647
 msgid ""
 "ODBC Function to use. The value used here should be the name of a section "
 "in /etc/asterisk/func_odbc.conf. If checking whether the function is "
@@ -298,27 +316,27 @@ msgid ""
 "ODBC_ prepended. "
 msgstr ""
 
-#: views/form.php:629
+#: views/form.php:659
 msgid "ODBC query"
 msgstr ""
 
-#: views/form.php:565
+#: views/form.php:595
 msgid "Password to use for connection to MySQL server"
 msgstr ""
 
-#: views/form.php:335
+#: views/form.php:338
 msgid ""
 "Prompt to be played if dtmf does not match validation rules and maximum "
 "retries has not been reached"
 msgstr ""
 
-#: views/form.php:361
+#: views/form.php:364
 msgid ""
 "Prompt to be played when a timeout occurs, before prompting the caller to "
 "try again"
 msgstr ""
 
-#: views/form.php:589
+#: views/form.php:619
 msgid ""
 "Query to use to obtain the result from the MySQL database. The following "
 "substitutions are available:<br>[NUMBER] the callerid number<br>[INPUT] the "
@@ -327,7 +345,7 @@ msgid ""
 "the same call"
 msgstr ""
 
-#: views/form.php:641
+#: views/form.php:671
 msgid ""
 "Query to use to obtain the result from the database. The following "
 "substitutions are available:<br>[NUMBER] the callerid number<br>[INPUT] the "
@@ -340,15 +358,24 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: views/form.php:402
+#: dynroute.i18n.php:8
+msgid ""
+"Routes calls based on dynamically calculated information that can be taken "
+"from a mysql database or via odbc with any supported database, from asterisk "
+"variables, from a url or an agi script. \t\tParameters to the lookups can "
+"combine dtmf input, asterisk variables, or values saved from previously "
+"executed dynamic routes on the same call."
+msgstr ""
+
+#: views/form.php:405
 msgid "Saved input variable name"
 msgstr ""
 
-#: views/form.php:426
+#: views/form.php:429
 msgid "Saved result variable name"
 msgstr ""
 
-#: views/form.php:455
+#: views/form.php:458
 msgid "Source Type"
 msgstr ""
 
@@ -356,19 +383,19 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: views/form.php:469
+#: views/form.php:472
 msgid "The source of the information to be looked up."
 msgstr ""
 
-#: views/form.php:249
+#: views/form.php:252
 msgid "Timeout"
 msgstr "Timeout"
 
-#: views/form.php:653
+#: views/form.php:683
 msgid "URL Lookup"
 msgstr ""
 
-#: views/form.php:665
+#: views/form.php:695
 msgid ""
 "URL to use to obtain the result (it must return text only, no html, xml or "
 "json. Exmaple http://localhost/test.php?param1=4&param2=9 The following "
@@ -378,22 +405,22 @@ msgid ""
 "the same call"
 msgstr ""
 
-#: views/form.php:541
+#: views/form.php:571
 msgid "Username to use for connection to MySQL server"
 msgstr ""
 
-#: views/form.php:273
+#: views/form.php:276
 msgid "Validation"
 msgstr ""
 
-#: views/form.php:285
+#: views/form.php:288
 msgid ""
 "Validation rules using a Asterisk regular expression (see Asterisk "
 "REGEX_MATCH). For example to ensure the input is between 3 and 4 digits long "
 "you could use ^[0-9]\\{3,4\\}$"
 msgstr ""
 
-#: views/form.php:177
+#: views/form.php:180 views/form.php:489
 msgid "Yes"
 msgstr ""
 
