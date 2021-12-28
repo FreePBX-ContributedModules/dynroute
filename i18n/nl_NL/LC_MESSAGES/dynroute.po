@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dynamic Routing\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-05 05:22+0000\n"
+"POT-Creation-Date: 2021-12-28 05:56+0000\n"
 "PO-Revision-Date: 2013-05-19 23:13+0100\n"
 "Last-Translator: John Fawcett <john@voipsupport.it>\n"
 "Language-Team: cDGo IT Consultancy <info@cdgo.nl>\n"
@@ -59,10 +59,6 @@ msgstr ""
 #: views/form.php:202
 msgid "Announcement"
 msgstr "Aankondiging bericht"
-
-#: dynroute.i18n.php:6
-msgid "Applications"
-msgstr ""
 
 #: views/form.php:759
 msgid "Asterisk Variable"
@@ -172,10 +168,6 @@ msgstr ""
 #: functions.inc.php:433
 #, php-format
 msgid "Dynamic Route: %s / Option: %s"
-msgstr ""
-
-#: dynroute.i18n.php:4 dynroute.i18n.php:10
-msgid "Dynamic Routes"
 msgstr ""
 
 #: views/form.php:44
@@ -356,15 +348,6 @@ msgstr ""
 
 #: Dynroute.class.php:64
 msgid "Reset"
-msgstr ""
-
-#: dynroute.i18n.php:8
-msgid ""
-"Routes calls based on dynamically calculated information that can be taken "
-"from a mysql database or via odbc with any supported database, from asterisk "
-"variables, from a url or an agi script. \t\tParameters to the lookups can "
-"combine dtmf input, asterisk variables, or values saved from previously "
-"executed dynamic routes on the same call."
 msgstr ""
 
 #: views/form.php:405
