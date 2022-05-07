@@ -1,5 +1,5 @@
 <?php
-// Copyright (c) 2015-2020 John Fawcett
+// Copyright (c) 2015-2022 John Fawcett
 // This is a dervied work licenced under GPL V3 or later
 // The original file was published by Sagoma Technologies in
 // Freepbx IVR module
@@ -16,8 +16,6 @@ class Dynroute extends \FreePBX_Helpers implements \BMO {
 	}
 	public function install() {}
 	public function uninstall() {}
-	public function backup() {}
-	public function restore($backup) {}
 	public function doConfigPageInit($page) {
 
 	}
@@ -62,6 +60,11 @@ class Dynroute extends \FreePBX_Helpers implements \BMO {
 						'name' => 'reset',
 						'id' => 'reset',
 						'value' => _('Reset')
+					),
+					'duplicate' => array(
+						'name' => 'duplicate',
+						'id' => 'duplicate',
+						'value' => _('Duplicate')
 					),
 					'submit' => array(
 						'name' => 'submit',
