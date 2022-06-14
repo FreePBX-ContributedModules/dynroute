@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-07 18:17+0000\n"
+"POT-Creation-Date: 2022-06-14 15:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: page.dynroute.php:23
+#: page.dynroute.php:24
 msgid ""
 "A connection to Asterisk Manager could not be made. This module requires "
 "Asterisk to be running and have proper credentials"
@@ -42,26 +42,22 @@ msgid ""
 "from a previous dynamic route on the same call"
 msgstr ""
 
-#: page.dynroute.php:53
+#: page.dynroute.php:54
 msgid "Actions"
 msgstr ""
 
-#: page.dynroute.php:36
+#: page.dynroute.php:37
 #: views/form.php:9
 #: views/rnav.php:8
 msgid "Add Dynamic Route"
 msgstr ""
 
-#: views/form.php:190
-msgid "Wait for DTMF input"
-msgstr ""
-
-#: views/form.php:264
-msgid "Time in seconds to wait for DTMF input"
-msgstr ""
-
 #: views/form.php:202
 msgid "Announcement"
+msgstr ""
+
+#: dynroute.i18n.php:6
+msgid "Applications"
 msgstr ""
 
 #: views/form.php:759
@@ -76,7 +72,7 @@ msgid ""
 "or result variable saved from a previous dynamic route on the same call"
 msgstr ""
 
-#: page.dynroute.php:21
+#: page.dynroute.php:22
 msgid "Connection Error"
 msgstr ""
 
@@ -88,8 +84,8 @@ msgstr ""
 msgid "Default Destination"
 msgstr ""
 
-#: Dynroute.class.php:59
-#: functions.inc.php:372
+#: Dynroute.class.php:99
+#: functions.inc.php:377
 msgid "Delete"
 msgstr ""
 
@@ -97,7 +93,7 @@ msgstr ""
 msgid "Delete this entry. Dont forget to click Submit to save changes!"
 msgstr ""
 
-#: page.dynroute.php:52
+#: page.dynroute.php:53
 msgid "Description"
 msgstr ""
 
@@ -105,7 +101,7 @@ msgstr ""
 msgid "Description of this Dynamic Route"
 msgstr ""
 
-#: functions.inc.php:372
+#: functions.inc.php:377
 msgid "Destination"
 msgstr ""
 
@@ -121,16 +117,16 @@ msgid ""
 "Entries section below or if the lookup fails or returns an empty value."
 msgstr ""
 
-#: Dynroute.class.php:67
+#: Dynroute.class.php:109
 msgid "Duplicate"
 msgstr ""
 
-#: page.dynroute.php:51
+#: page.dynroute.php:52
 msgid "Dyname Route Name"
 msgstr ""
 
-#: Dynroute.class.php:28
-#: page.dynroute.php:29
+#: Dynroute.class.php:26
+#: page.dynroute.php:30
 msgid "Dynamic Route"
 msgstr ""
 
@@ -170,22 +166,27 @@ msgstr ""
 msgid "Dynamic Route Saved Variables"
 msgstr ""
 
-#: functions.inc.php:467
-#: functions.inc.php:487
+#: functions.inc.php:472
+#: functions.inc.php:492
 #, php-format
 msgid "Dynamic Route: %s"
 msgstr ""
 
-#: functions.inc.php:433
+#: functions.inc.php:438
 #, php-format
 msgid "Dynamic Route: %s / Option: %s"
+msgstr ""
+
+#: dynroute.i18n.php:4
+#: dynroute.i18n.php:10
+msgid "Dynamic Routes"
 msgstr ""
 
 #: views/form.php:44
 msgid "Edit Dynamic Route: "
 msgstr ""
 
-#: assets/js/dynroute.js:124
+#: assets/js/dynroute.js:136
 msgid "Edit:"
 msgstr ""
 
@@ -234,7 +235,7 @@ msgstr ""
 msgid "List Dynamc Routes"
 msgstr ""
 
-#: functions.inc.php:372
+#: functions.inc.php:377
 msgid "Match"
 msgstr ""
 
@@ -294,12 +295,13 @@ msgid ""
 "prefix it with DYNROUTE_ e.g. DYNROUTE_xxx. In the case of lookup type None "
 "then this will be valorized with DTMF input (if enabled)."
 msgstr ""
+
 #: views/form.php:182
 #: views/form.php:491
 msgid "No"
 msgstr ""
 
-#: page.dynroute.php:20
+#: page.dynroute.php:21
 msgid "No Astman, Not loading Dynroute"
 msgstr ""
 
@@ -364,8 +366,17 @@ msgid ""
 "the same call"
 msgstr ""
 
-#: Dynroute.class.php:64
+#: Dynroute.class.php:104
 msgid "Reset"
+msgstr ""
+
+#: dynroute.i18n.php:8
+msgid ""
+"Routes calls based on dynamically calculated information that can be taken "
+"from a mysql database or via odbc with any supported database, from asterisk "
+"variables, from a url or an agi script. \t\tParameters to the lookups can "
+"combine dtmf input, asterisk variables, or values saved from previously "
+"executed dynamic routes on the same call."
 msgstr ""
 
 #: views/form.php:405
@@ -380,12 +391,16 @@ msgstr ""
 msgid "Source Type"
 msgstr ""
 
-#: Dynroute.class.php:69
+#: Dynroute.class.php:114
 msgid "Submit"
 msgstr ""
 
 #: views/form.php:472
 msgid "The source of the information to be looked up."
+msgstr ""
+
+#: views/form.php:264
+msgid "Time in seconds to wait for DTMF input"
 msgstr ""
 
 #: views/form.php:252
@@ -421,6 +436,10 @@ msgid ""
 "to ensure the input is between 3 and 4 digits long you could use "
 "^[0-9]\\{3,4\\}$ in this field. Non matching DTMF will produce a retry "
 "depending on the value of Invalid Retries."
+msgstr ""
+
+#: views/form.php:190
+msgid "Wait for DTMF input"
 msgstr ""
 
 #: views/form.php:180
