@@ -3,13 +3,13 @@
 # For licensing information, please see the file named LICENSE located in the module directory
 #
 # FreePBX language template for dynroute
-# Copyright (C) 2008-2021 Sangoma Technologies, Inc.
+# Copyright (C) 2008-2022 Sangoma Technologies, Inc.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-05 05:22+0000\n"
+"POT-Creation-Date: 2022-05-07 18:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,19 +53,15 @@ msgid "Add Dynamic Route"
 msgstr ""
 
 #: views/form.php:190
-msgid "Allows input of DTMF"
+msgid "Wait for DTMF input"
 msgstr ""
 
 #: views/form.php:264
-msgid "Amount of time in seconds for dtmf timeout"
+msgid "Time in seconds to wait for DTMF input"
 msgstr ""
 
 #: views/form.php:202
 msgid "Announcement"
-msgstr ""
-
-#: dynroute.i18n.php:6
-msgid "Applications"
 msgstr ""
 
 #: views/form.php:759
@@ -85,7 +81,7 @@ msgid "Connection Error"
 msgstr ""
 
 #: views/form.php:547
-msgid "Database to connect to on MySQL server"
+msgid "Database to use."
 msgstr ""
 
 #: views/form.php:792
@@ -122,7 +118,11 @@ msgstr ""
 #: views/form.php:804
 msgid ""
 "Destination to send the call to if there is no match in the Dynamic Route "
-"Entries section below or if the lookup fails."
+"Entries section below or if the lookup fails or returns an empty value."
+msgstr ""
+
+#: Dynroute.class.php:67
+msgid "Duplicate"
 msgstr ""
 
 #: page.dynroute.php:51
@@ -181,11 +181,6 @@ msgstr ""
 msgid "Dynamic Route: %s / Option: %s"
 msgstr ""
 
-#: dynroute.i18n.php:4
-#: dynroute.i18n.php:10
-msgid "Dynamic Routes"
-msgstr ""
-
 #: views/form.php:44
 msgid "Edit Dynamic Route: "
 msgstr ""
@@ -204,12 +199,15 @@ msgstr ""
 
 #: views/form.php:499
 msgid ""
-"Enable variable substitutions in the lookup query. You probably want to "
-"disable this if using REGEX in Asterisk varibales."
+"Enable variable substitutions in the lookup query (for [INPUT], [NUMBER], "
+"[DID] or [name] where name is a Saved Input Variable Name or Saved Result "
+"Variable Name from a previous Dynamic Route). You probably want to disable "
+"this if using a lookup type of Asterisk Variable and a REGEX expression in "
+"the lookup since substitions can be interpreted wrongly."
 msgstr ""
 
 #: views/form.php:216
-msgid "Greeting to be played on entry to the Dynamic Route."
+msgid "Greeting to be played prior to DTMF input."
 msgstr ""
 
 #: views/form.php:523
@@ -247,7 +245,7 @@ msgstr ""
 #: views/form.php:240
 msgid ""
 "Maximum number of DTMF digits. If zero then no limit. Avoids having to press "
-"# key at end of fixed input length."
+"# key at end of fixed input length. Additional DTMF input is ignored."
 msgstr ""
 
 #: views/form.php:535
@@ -293,9 +291,9 @@ msgid ""
 "dialplan or further dynamic routes. This is available as [xxx] in the query/"
 "lookup where xxx is the name of the variable you specify here. To use the "
 "variable in the dialplan (e.g. custom applicaitons) it is necessary to "
-"prefix it with DYNROUTE_ e.g. DYNROUTE_xxx"
+"prefix it with DYNROUTE_ e.g. DYNROUTE_xxx. In the case of lookup type None "
+"then this will be valorized with DTMF input (if enabled)."
 msgstr ""
-
 #: views/form.php:182
 #: views/form.php:491
 msgid "No"
@@ -312,7 +310,7 @@ msgid "None"
 msgstr ""
 
 #: views/form.php:312
-msgid "Number of times to retry when dtmf does not match validation rules"
+msgid "Number of times to retry when DTMF does not match validation rule."
 msgstr ""
 
 #: views/form.php:635
@@ -322,9 +320,10 @@ msgstr ""
 #: views/form.php:647
 msgid ""
 "ODBC Function to use. The value used here should be the name of a section "
-"in /etc/asterisk/func_odbc.conf. If checking whether the function is "
-"registered at the asterisk console with \"core show functions \" it has an "
-"ODBC_ prepended. "
+"in /etc/asterisk/func_odbc.conf without the ODBC_ prefix that asterisk adds. "
+"The dynroute module will add the ODBC_ prefix. For debugging you can also "
+"check if the ODBC function is registered at the asterisk console with \"core "
+"show functions \"."
 msgstr ""
 
 #: views/form.php:659
@@ -367,15 +366,6 @@ msgstr ""
 
 #: Dynroute.class.php:64
 msgid "Reset"
-msgstr ""
-
-#: dynroute.i18n.php:8
-msgid ""
-"Routes calls based on dynamically calculated information that can be taken "
-"from a mysql database or via odbc with any supported database, from asterisk "
-"variables, from a url or an agi script. \t\tParameters to the lookups can "
-"combine dtmf input, asterisk variables, or values saved from previously "
-"executed dynamic routes on the same call."
 msgstr ""
 
 #: views/form.php:405
@@ -426,9 +416,11 @@ msgstr ""
 
 #: views/form.php:288
 msgid ""
-"Validation rules using a Asterisk regular expression (see Asterisk "
-"REGEX_MATCH). For example to ensure the input is between 3 and 4 digits long "
-"you could use ^[0-9]\\{3,4\\}$"
+"Validation rules using a Asterisk regular expression. The DTMF input will be "
+"validated with Asterisk REGEX_MATCH function using this REGEX. For example "
+"to ensure the input is between 3 and 4 digits long you could use "
+"^[0-9]\\{3,4\\}$ in this field. Non matching DTMF will produce a retry "
+"depending on the value of Invalid Retries."
 msgstr ""
 
 #: views/form.php:180

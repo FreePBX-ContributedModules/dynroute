@@ -1,6 +1,6 @@
 <?php
 if (!defined('FREEPBX_IS_AUTH')) { die('No direct script access allowed'); }
-// Copyright (c) 2015-2020 John Fawcett
+// Copyright (c) 2015-2022 John Fawcett
 // This is a dervied work licenced under GPL V3 or later
 // The original file was published by Sagoma Technologies in
 // Freepbx IVR module
@@ -99,18 +99,19 @@ function dynroute_get_config($engine) {
 						$ext->add($c, 's', '', new ext_gotoif('$["${DYNROUTE_REGEX}" = "0"]',$c.',2,1'));
 					}
                                 }
-				if ($dynroute['sourcetype']=='mysql' && $dynroute['mysql_host']!='' && $dynroute['mysql_query']!='')
+				$ext->add($c, 's', '', new ext_setvar('dynroute', ''));
+				if ($dynroute['sourcetype']=='mysql' && $dynroute['mysql_host']!='' && $dynroute['mysql_dbname']!='' && $dynroute['mysql_query']!='')
 				{
-					$ext->add($c, 's', '', new ext_setvar('connid', '""'));
+					$ext->add($c, 's', '', new ext_setvar('connid', ''));
                                 	$ext->add($c, 's', '', new ext_mysql_connect('connid', $dynroute['mysql_host'],  $dynroute['mysql_username'],  $dynroute['mysql_password'],  $dynroute['mysql_dbname']));
-					$ext->add($c, 's', '', new ext_gotoif('$["${connid}" = ""]',$id.',1,1'));
+					$ext->add($c, 's', '', new ext_gotoif('$["${connid}" = ""]',$id.',4,1'));
                                 	$ext->add($c, 's', '', new ext_mysql_query('resultid', 'connid', $query));
+					$ext->add($c, 's', '', new ext_gotoif('$["${resultid}" = ""]',$c.',4,1'));
                                 	$ext->add($c, 's', '', new ext_mysql_fetch('fetchid', 'resultid', 'dynroute')); 
                                 	$ext->add($c, 's', '', new ext_mysql_clear('resultid'));                            
                                 	$ext->add($c, 's', '', new ext_mysql_disconnect('connid'));
-					if ($dynroute['chan_var_name_res'] != '')
-						$ext->add($c, 's', '', new ext_setvar('__DYNROUTE_'.$dynroute['chan_var_name_res'], '${dynroute}'));
-					$ext->add($c, 's', '', new ext_gotoif('$[${fetchid} = 0]',$c.',1,1'));
+					$ext->add($c, 's', '', new ext_gotoif('$[${fetchid} = 0]',$c.',4,1'));
+					$ext->add($c, 's', '', new ext_noop('dynroute=${dynroute}'));
                                 }
 				if ($dynroute['sourcetype']=='url' && $dynroute['url_query']!='')
 				{
@@ -119,45 +120,45 @@ function dynroute_get_config($engine) {
 					$ext->add($c, 's', '', new ext_setvar('CURLOPT(ftptimeout)','5'));
 					$ext->add($c, 's', '', new ext_setvar('CURLOPT(httptimeout)','5'));
 					$ext->add($c, 's', '', new ext_setvar('dynroute', '${CURL'.'("'.$query.'")}'));
-					$ext->add($c, 's', '', new ext_gotoif('$["${dynroute}" = ""]',$c.',1,1'));
-					if ($dynroute['chan_var_name_res'] != '')
-						$ext->add($c, 's', '', new ext_setvar('__DYNROUTE_'.$dynroute['chan_var_name_res'], '${dynroute}'));
                                 }
 				if ($dynroute['sourcetype']=='agi' && $dynroute['agi_query']!='')
 				{
 					$ext->add($c, 's', '', new ext_agi($query));
 					if ($dynroute['agi_var_name_res'] != '')
 						$ext->add($c, 's', '', new ext_setvar('dynroute', '${'.$dynroute['agi_var_name_res'].'}'));
-					$ext->add($c, 's', '', new ext_gotoif('$["${dynroute}" = ""]',$c.',1,1'));
-					if ($dynroute['chan_var_name_res'] != '')
-						$ext->add($c, 's', '', new ext_setvar('__DYNROUTE_'.$dynroute['chan_var_name_res'], '${dynroute}'));
+					$ext->add($c, 's', '', new ext_noop('dynroute=${dynroute}'));
                                 }
 				if ($dynroute['sourcetype']=='odbc' && $dynroute['odbc_func']!='')
 				{
 					$ext->add($c, 's', '', new ext_setvar('dynroute', '${ODBC_'.$dynroute['odbc_func'].'("'.$query.'")}'));
-					if ($dynroute['chan_var_name_res'] != '')
-						$ext->add($c, 's', '', new ext_setvar('__DYNROUTE_'.$dynroute['chan_var_name_res'], '${dynroute}'));
                                 }
 				if ($dynroute['sourcetype']=='astvar' && $dynroute['astvar_query']!='')
 				{
 					$ext->add($c, 's', '', new ext_setvar('dynroute', $query));
-					if ($dynroute['chan_var_name_res'] != '')
-						$ext->add($c, 's', '', new ext_setvar('__DYNROUTE_'.$dynroute['chan_var_name_res'], '${dynroute}'));
                                 }
-				if ($dynroute['sourcetype']=='none' && $dyrnoute['enable_dtmf_input']=='CHECKED')
+				if ($dynroute['sourcetype']=='none' && $dynroute['enable_dtmf_input']=='CHECKED')
                                 {
                                         $ext->add($c, 's', '', new ext_setvar('dynroute','${dtmfinput}'));
                                 }
+				$ext->add($c, 's', '', new ext_setvar('dynroute', '${STRREPLACE(dynroute,"\"","")}'));
+				if ($dynroute['chan_var_name_res'] != '')
+					$ext->add($c, 's', '', new ext_setvar('__DYNROUTE_'.$dynroute['chan_var_name_res'], '${dynroute}'));
+				$ext->add($c, 's', '', new ext_gotoif('$["${dynroute}" = ""]',$c.',1,1'));
+
+				// add the destinations from the matches section
 				$dests = dynroute_get_entries($dynroute['id']);
 				if (!empty($dests)) {
 					foreach($dests as $dest) {
-						$ext->add($c, 's', '', new ext_gotoif('$["${dynroute}" = "'.$dest['selection'].'"]',$dest['dest']));
+						$ext->add($c, 's', '', new ext_gotoif('$["${dynroute}" = "'.str_replace("\"","",$dest['selection']).'"]',$dest['dest']));
 					}
 				}
 				$ext->add($c, 's', '', new ext_goto($c.',1,1'));
+
+				// used to send to default route or to hangup if not default route
 				if (!empty($dynroute['default_dest'])) $ext->add($c, '1', '', new ext_goto($dynroute['default_dest']));
 				$ext->add($c, '1', '', new ext_hangup(''));
-
+				
+				// used to manage retries for dtmf not matching validation regex
 				if ($dynroute['enable_dtmf_input']=='CHECKED' && $dynroute['validation_regex'] != '')
 				{
 					$ext->add($c, '2', '', new ext_setvar('__DYNROUTE_RETRIES', '$[${DYNROUTE_RETRIES}+1]'));
@@ -169,6 +170,11 @@ function dynroute_get_config($engine) {
 					if ($dynroute['invalid_dest']!='') $ext->add($c, '3', '', new ext_goto($dynroute['invalid_dest']));
 					$ext->add($c, '3', '', new ext_goto($c.',1,1'));
 				}
+
+				// used for resetting chan_var_name_res in case of error
+				if ($dynroute['chan_var_name_res'] != '')
+					$ext->add($c, '4', '', new ext_setvar('__DYNROUTE_'.$dynroute['chan_var_name_res'], ''));
+				$ext->add($c, '4', '', new ext_goto($c.',1,1'));
 			}
 		break;
 	}
@@ -256,10 +262,9 @@ function dynroute_configprocess(){
 				$_REQUEST['id'] = $vars['id'] = dynroute_save_details($vars);
 				dynroute_save_entries($vars['id'], $entries);
 				needreload();
-				$_REQUEST['action'] = 'edit';
 				$this_dest = dynroute_getdest($vars['id']);
-				fwmsg::set_dest($this_dest[0]);
-				redirect_standard_continue('id','action');
+				\fwmsg::set_dest($this_dest[0]);
+				redirect_standard_continue();
 			break;
 			case 'delete':
 				dynroute_delete($vars['id']);
