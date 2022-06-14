@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreePBX dynroute module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-28 05:56+0000\n"
+"POT-Creation-Date: 2022-06-14 15:15+0000\n"
 "PO-Revision-Date: 2020-12-19 13:57+0100\n"
 "Last-Translator: John Fawcett <john@voipsupport.it>\n"
 "Language-Team: John Fawcett <john@voipsupport.it>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: page.dynroute.php:23
+#: page.dynroute.php:24
 msgid ""
 "A connection to Asterisk Manager could not be made. This module requires "
 "Asterisk to be running and have proper credentials"
@@ -50,21 +50,13 @@ msgstr ""
 "chiamato<br>[xxx] dove xxx è il nome di un variabile di input o di risultato "
 "salvato da un precedente dynamic route utilizzato sulla stessa chiamata"
 
-#: page.dynroute.php:53
+#: page.dynroute.php:54
 msgid "Actions"
 msgstr "Azioni"
 
-#: page.dynroute.php:36 views/form.php:9 views/rnav.php:8
+#: page.dynroute.php:37 views/form.php:9 views/rnav.php:8
 msgid "Add Dynamic Route"
 msgstr "Aggiungi Dynamic Route"
-
-#: views/form.php:190
-msgid "Allows input of DTMF"
-msgstr "Consente l'input di DTMF"
-
-#: views/form.php:264
-msgid "Amount of time in seconds for dtmf timeout"
-msgstr "Tempo in secondi per aspettare input DTMF"
 
 #: views/form.php:202
 msgid "Announcement"
@@ -87,19 +79,19 @@ msgstr ""
 "nome di un variabile di input o di risultato salvato da un precedente "
 "dynamic route utilizzato sulla stessa chiamata"
 
-#: page.dynroute.php:21
+#: page.dynroute.php:22
 msgid "Connection Error"
 msgstr "Errore di connessione"
 
 #: views/form.php:547
-msgid "Database to connect to on MySQL server"
-msgstr "Nome database"
+msgid "Database to use."
+msgstr ""
 
 #: views/form.php:792
 msgid "Default Destination"
 msgstr "Destinazione di default"
 
-#: Dynroute.class.php:59 functions.inc.php:372
+#: Dynroute.class.php:99 functions.inc.php:377
 msgid "Delete"
 msgstr "Elimina"
 
@@ -107,7 +99,7 @@ msgstr "Elimina"
 msgid "Delete this entry. Dont forget to click Submit to save changes!"
 msgstr "Cancella. Ricorda di salvare la modifica!"
 
-#: page.dynroute.php:52
+#: page.dynroute.php:53
 msgid "Description"
 msgstr "Descrizione"
 
@@ -115,7 +107,7 @@ msgstr "Descrizione"
 msgid "Description of this Dynamic Route"
 msgstr "Descrizione del Dynamic Route"
 
-#: functions.inc.php:372
+#: functions.inc.php:377
 msgid "Destination"
 msgstr "Destinazione"
 
@@ -130,16 +122,18 @@ msgstr ""
 #: views/form.php:804
 msgid ""
 "Destination to send the call to if there is no match in the Dynamic Route "
-"Entries section below or if the lookup fails."
+"Entries section below or if the lookup fails or returns an empty value."
 msgstr ""
-"Destinazione quando non c'è nessuna corrispondenza fra il risultato e i "
-"valori nella sezione sottostante o se la query fallisce."
 
-#: page.dynroute.php:51
+#: Dynroute.class.php:109
+msgid "Duplicate"
+msgstr ""
+
+#: page.dynroute.php:52
 msgid "Dyname Route Name"
 msgstr "Nome del Dynamic Route"
 
-#: Dynroute.class.php:28 page.dynroute.php:29
+#: Dynroute.class.php:26 page.dynroute.php:30
 msgid "Dynamic Route"
 msgstr "Dynamic Route"
 
@@ -179,12 +173,12 @@ msgstr "Nome del Dynamic Route"
 msgid "Dynamic Route Saved Variables"
 msgstr "Dynamic Route Variabli"
 
-#: functions.inc.php:467 functions.inc.php:487
+#: functions.inc.php:472 functions.inc.php:492
 #, php-format
 msgid "Dynamic Route: %s"
 msgstr "Dynamic Route: %s"
 
-#: functions.inc.php:433
+#: functions.inc.php:438
 #, php-format
 msgid "Dynamic Route: %s / Option: %s"
 msgstr "Dynamic Route: %s / Option: %s"
@@ -193,7 +187,7 @@ msgstr "Dynamic Route: %s / Option: %s"
 msgid "Edit Dynamic Route: "
 msgstr "Modifica Dynamc Route: "
 
-#: assets/js/dynroute.js:124
+#: assets/js/dynroute.js:136
 msgid "Edit:"
 msgstr "Modifica:"
 
@@ -207,15 +201,16 @@ msgstr "Abilita sostituzioni"
 
 #: views/form.php:499
 msgid ""
-"Enable variable substitutions in the lookup query. You probably want to "
-"disable this if using REGEX in Asterisk varibales."
+"Enable variable substitutions in the lookup query (for [INPUT], [NUMBER], "
+"[DID] or [name] where name is a Saved Input Variable Name or Saved Result "
+"Variable Name from a previous Dynamic Route). You probably want to disable "
+"this if using a lookup type of Asterisk Variable and a REGEX expression in "
+"the lookup since substitions can be interpreted wrongly."
 msgstr ""
-"Abilita sostituzioni variabili nella query. Verosimilmente serve "
-"disabilitare nel caso di utilizzare \"Asterisk Variabile\" con REGEX."
 
 #: views/form.php:216
-msgid "Greeting to be played on entry to the Dynamic Route."
-msgstr "Registrazione da riprodurre all'inizio del Dynamic Route."
+msgid "Greeting to be played prior to DTMF input."
+msgstr ""
 
 #: views/form.php:523
 msgid "Hostname of MySQL server"
@@ -241,7 +236,7 @@ msgstr "Registrazione per ripetere su invalido"
 msgid "List Dynamc Routes"
 msgstr "Elenco Dynamic Routes"
 
-#: functions.inc.php:372
+#: functions.inc.php:377
 msgid "Match"
 msgstr "Valore"
 
@@ -252,10 +247,8 @@ msgstr "Numero massimo di cifre dtmf"
 #: views/form.php:240
 msgid ""
 "Maximum number of DTMF digits. If zero then no limit. Avoids having to press "
-"# key at end of fixed input length."
+"# key at end of fixed input length. Additional DTMF input is ignored."
 msgstr ""
-"Numero massimo di cifre DTMF. Se zero, non c'è limite. Evita di dover "
-"premere il tasto # per DTMF di lungezza fissa."
 
 #: views/form.php:535
 msgid "MySQL database"
@@ -300,14 +293,15 @@ msgid ""
 "dialplan or further dynamic routes. This is available as [xxx] in the query/"
 "lookup where xxx is the name of the variable you specify here. To use the "
 "variable in the dialplan (e.g. custom applicaitons) it is necessary to "
-"prefix it with DYNROUTE_ e.g. DYNROUTE_xxx"
-msgstr "Variabile per salvare risultato"
+"prefix it with DYNROUTE_ e.g. DYNROUTE_xxx. In the case of lookup type None "
+"then this will be valorized with DTMF input (if enabled)."
+msgstr ""
 
 #: views/form.php:182 views/form.php:491
 msgid "No"
 msgstr "No"
 
-#: page.dynroute.php:20
+#: page.dynroute.php:21
 msgid "No Astman, Not loading Dynroute"
 msgstr "Astman non disponibile, Dynroute non caricato"
 
@@ -316,8 +310,8 @@ msgid "None"
 msgstr "Nessuno"
 
 #: views/form.php:312
-msgid "Number of times to retry when dtmf does not match validation rules"
-msgstr "Numero di tentativi"
+msgid "Number of times to retry when DTMF does not match validation rule."
+msgstr ""
 
 #: views/form.php:635
 msgid "ODBC Function"
@@ -326,13 +320,11 @@ msgstr "ODBC Function"
 #: views/form.php:647
 msgid ""
 "ODBC Function to use. The value used here should be the name of a section "
-"in /etc/asterisk/func_odbc.conf. If checking whether the function is "
-"registered at the asterisk console with \"core show functions \" it has an "
-"ODBC_ prepended. "
+"in /etc/asterisk/func_odbc.conf without the ODBC_ prefix that asterisk adds. "
+"The dynroute module will add the ODBC_ prefix. For debugging you can also "
+"check if the ODBC function is registered at the asterisk console with \"core "
+"show functions \"."
 msgstr ""
-"Funzione ODBC. Il valore dovrebbe essere un nome di sezione da /etc/asterisk/"
-"func_odbc.conf. Quando si esegue \"core show functions\" dal console di "
-"asterisk il nome ha un prefisso di ODBC "
 
 #: views/form.php:659
 msgid "ODBC query"
@@ -381,7 +373,7 @@ msgstr ""
 "chiamato<br>[xxx] dove xxx è il nome di un variabile di input o di risultato "
 "salvato da un precedente dynamic route utilizzato sulla stessa chiamata"
 
-#: Dynroute.class.php:64
+#: Dynroute.class.php:104
 msgid "Reset"
 msgstr "Reimposta"
 
@@ -397,13 +389,17 @@ msgstr "Variabile per salvare risultato"
 msgid "Source Type"
 msgstr "Tipo sorgente"
 
-#: Dynroute.class.php:69
+#: Dynroute.class.php:114
 msgid "Submit"
 msgstr "Invio"
 
 #: views/form.php:472
 msgid "The source of the information to be looked up."
 msgstr "Sorgente delle info."
+
+#: views/form.php:264
+msgid "Time in seconds to wait for DTMF input"
+msgstr ""
 
 #: views/form.php:252
 msgid "Timeout"
@@ -439,12 +435,16 @@ msgstr "Validazione"
 
 #: views/form.php:288
 msgid ""
-"Validation rules using a Asterisk regular expression (see Asterisk "
-"REGEX_MATCH). For example to ensure the input is between 3 and 4 digits long "
-"you could use ^[0-9]\\{3,4\\}$"
+"Validation rules using a Asterisk regular expression. The DTMF input will be "
+"validated with Asterisk REGEX_MATCH function using this REGEX. For example "
+"to ensure the input is between 3 and 4 digits long you could use "
+"^[0-9]\\{3,4\\}$ in this field. Non matching DTMF will produce a retry "
+"depending on the value of Invalid Retries."
 msgstr ""
-"Regola di validazione con un'espressione REGEX_MATCH. Ad esempio per "
-"controllare se l'input è fra 3 e 4 cifre: ^[0-9]\\{3,4\\}$"
+
+#: views/form.php:190
+msgid "Wait for DTMF input"
+msgstr ""
 
 #: views/form.php:180 views/form.php:489
 msgid "Yes"
@@ -453,6 +453,68 @@ msgstr "Si"
 #: views/entries.php:25
 msgid "value to be matched"
 msgstr "valore da confrontare"
+
+#~ msgid "Allows input of DTMF"
+#~ msgstr "Consente l'input di DTMF"
+
+#~ msgid "Amount of time in seconds for dtmf timeout"
+#~ msgstr "Tempo in secondi per aspettare input DTMF"
+
+#~ msgid "Database to connect to on MySQL server"
+#~ msgstr "Nome database"
+
+#~ msgid ""
+#~ "Destination to send the call to if there is no match in the Dynamic Route "
+#~ "Entries section below or if the lookup fails."
+#~ msgstr ""
+#~ "Destinazione quando non c'è nessuna corrispondenza fra il risultato e i "
+#~ "valori nella sezione sottostante o se la query fallisce."
+
+#~ msgid ""
+#~ "Enable variable substitutions in the lookup query. You probably want to "
+#~ "disable this if using REGEX in Asterisk varibales."
+#~ msgstr ""
+#~ "Abilita sostituzioni variabili nella query. Verosimilmente serve "
+#~ "disabilitare nel caso di utilizzare \"Asterisk Variabile\" con REGEX."
+
+#~ msgid "Greeting to be played on entry to the Dynamic Route."
+#~ msgstr "Registrazione da riprodurre all'inizio del Dynamic Route."
+
+#~ msgid ""
+#~ "Maximum number of DTMF digits. If zero then no limit. Avoids having to "
+#~ "press # key at end of fixed input length."
+#~ msgstr ""
+#~ "Numero massimo di cifre DTMF. Se zero, non c'è limite. Evita di dover "
+#~ "premere il tasto # per DTMF di lungezza fissa."
+
+#~ msgid ""
+#~ "Name of variable in which to save lookup result for future use in the "
+#~ "dialplan or further dynamic routes. This is available as [xxx] in the "
+#~ "query/lookup where xxx is the name of the variable you specify here. To "
+#~ "use the variable in the dialplan (e.g. custom applicaitons) it is "
+#~ "necessary to prefix it with DYNROUTE_ e.g. DYNROUTE_xxx"
+#~ msgstr "Variabile per salvare risultato"
+
+#~ msgid "Number of times to retry when dtmf does not match validation rules"
+#~ msgstr "Numero di tentativi"
+
+#~ msgid ""
+#~ "ODBC Function to use. The value used here should be the name of a section "
+#~ "in /etc/asterisk/func_odbc.conf. If checking whether the function is "
+#~ "registered at the asterisk console with \"core show functions \" it has "
+#~ "an ODBC_ prepended. "
+#~ msgstr ""
+#~ "Funzione ODBC. Il valore dovrebbe essere un nome di sezione da /etc/"
+#~ "asterisk/func_odbc.conf. Quando si esegue \"core show functions\" dal "
+#~ "console di asterisk il nome ha un prefisso di ODBC "
+
+#~ msgid ""
+#~ "Validation rules using a Asterisk regular expression (see Asterisk "
+#~ "REGEX_MATCH). For example to ensure the input is between 3 and 4 digits "
+#~ "long you could use ^[0-9]\\{3,4\\}$"
+#~ msgstr ""
+#~ "Regola di validazione con un'espressione REGEX_MATCH. Ad esempio per "
+#~ "controllare se l'input è fra 3 e 4 cifre: ^[0-9]\\{3,4\\}$"
 
 #~ msgid "Ext"
 #~ msgstr "Match"
