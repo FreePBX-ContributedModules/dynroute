@@ -768,7 +768,7 @@ foreach ($hooks as $key => $value) {
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<span id="url_query-help" class="help-block fpbx-help-block"><?php echo _("Asterisk variable whose value is to be used. The following substitutions are available:<br>[NUMBER] the callerid number<br>[INPUT] the dtmf sequence input<br>[DID] the dialed number<br>[xxx] where xxx is the name of an input or result variable saved from a previous dynamic route on the same call")?></span>
+										<span id="astvar_query-help" class="help-block fpbx-help-block"><?php echo _("Asterisk variable whose value is to be used. The following substitutions are available:<br>[NUMBER] the callerid number<br>[INPUT] the dtmf sequence input<br>[DID] the dialed number<br>[xxx] where xxx is the name of an input or result variable saved from a previous dynamic route on the same call")?></span>
 									</div>
 								</div>
 							</div>
