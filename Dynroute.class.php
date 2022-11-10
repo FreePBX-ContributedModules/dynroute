@@ -57,11 +57,12 @@ class Dynroute extends \FreePBX_Helpers implements \BMO {
 		$this->deleteEntriesById($id);
 		if (is_array($entry) && !empty($entry)) {
 			foreach($entry as $entries) {
-				$stmt = $this->db->prepare('INSERT INTO dynroute_dests VALUES (:dynroute_id, :selection, :dest)');
+				$stmt = $this->db->prepare('INSERT INTO dynroute_dests VALUES (:dynroute_id, :selection, :dest, :description)');
 				$stmt->execute([
 					':dynroute_id' => $entries['dynroute_id'],
 					':selection' => $entries['selection'],
 					':dest' => $entries['dest'],
+					':description' => $entries['description'],
 				]);
 			}
 		}

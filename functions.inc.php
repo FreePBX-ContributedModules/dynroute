@@ -190,7 +190,7 @@ function dynroute_get_entries($id) {
 	global $db;
 
 	//+0 to convert string to an integer
-	$sql = "SELECT selection, dest FROM dynroute_dests where dynroute_id='$id' ORDER BY selection+0";
+	$sql = "SELECT selection, dest, description FROM dynroute_dests where dynroute_id='$id' ORDER BY selection+0";
 	$res = $db->getAll($sql, array($id), DB_FETCHMODE_ASSOC);
 	if ($db->IsError($res)) {
 		die_freepbx($res->getDebugInfo());
@@ -331,11 +331,12 @@ function dynroute_save_entries($id, $entries){
 						'dynroute_id'	=> $id,
 						'selection' 	=> $entries['ext'][$i],
 						'dest'		=> $entries['goto'][$i],
+						'description'	=> $entries['description'][$i],
 				);
 			}
 
 		}
-		$sql = $db->prepare('INSERT INTO dynroute_dests VALUES (?, ?, ?)');
+		$sql = $db->prepare('INSERT INTO dynroute_dests VALUES (?, ?, ?, ?)');
 		$res = $db->executeMultiple($sql, $d);
 		if ($db->IsError($res)){
 			die_freepbx($res->getDebugInfo());
@@ -358,10 +359,11 @@ function dynroute_restore_entries($id, $entries){
 					'dynroute_id'   => $id,
 					'selection'     => $entries[$i]['selection'],
 					'dest'          => $entries[$i]['dest'],
+					'description'   => $entries[$i]['description'],
 				);
 			}
 		}
-		$sql = $db->prepare('INSERT INTO dynroute_dests VALUES (?, ?, ?)');
+		$sql = $db->prepare('INSERT INTO dynroute_dests VALUES (?, ?, ?, ?)');
 		$res = $db->executeMultiple($sql, $d);
 		if ($db->IsError($res)){
 			die_freepbx($res->getDebugInfo());
@@ -374,7 +376,7 @@ function dynroute_restore_entries($id, $entries){
 
 //draw dynamic route entires table header
 function dynroute_draw_entries_table_header_dynroute() {
-	return  array(_('Match'), _('Destination'), _('Delete'));
+	return  array(_('Match'), _('Destination'), _('Description'), _('Delete'));
 }
 
 //draw actualy entires

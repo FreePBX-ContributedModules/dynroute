@@ -2,7 +2,7 @@
 	<rawname>dynroute</rawname>
 	<repo>unsupported</repo>
 	<name>Dynamic Routes</name>
-	<version>16.0.2</version>
+	<version>16.0.3</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>GPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/gpl-3.0.txt</licenselink>
@@ -12,6 +12,7 @@
  		Parameters to the lookups can combine dtmf input, asterisk variables, or values saved from previously executed dynamic routes on the same call.
 	</description>
 	<changelog>
+		*16.0.3* FREEPBX-23819 
 		*16.0.2* FREEPBX-22165 
 		*16.0.1* Dynamic Route release
 	</changelog>
@@ -68,6 +69,7 @@
 			<field name="dynroute_id" type="integer" primaryKey="true"/>
 			<field name="selection" type="string" length="190" default="" primaryKey="true"/>
 			<field name="dest" type="string" length="255" notnull="false"/>
+			<field name="description" type="string" length="255" notnull="false"/>
 		</table>
 	</database>
 </module>
