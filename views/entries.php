@@ -34,6 +34,13 @@ foreach ($entries as $e) {
 		$row[] = drawselects($e['dest'], $count, false, false) . form_hidden('entries[goto][]', '');
 	}
 
+	//add description
+	$row[] = form_input(
+				array( 
+					'name'			=> 'entries[description][]',
+					'value'			=> $e['description'],
+				)
+			);
 
 	//delete buttom
 	$row[] = '<a href="#" alt="'
