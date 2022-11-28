@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-14 15:15+0000\n"
+"POT-Creation-Date: 2022-11-28 09:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,6 +56,10 @@ msgstr ""
 msgid "Announcement"
 msgstr ""
 
+#: dynroute.i18n.php:6
+msgid "Applications"
+msgstr ""
+
 #: views/form.php:759
 msgid "Asterisk Variable"
 msgstr ""
@@ -80,15 +84,16 @@ msgstr ""
 msgid "Default Destination"
 msgstr ""
 
-#: Dynroute.class.php:99
-#: functions.inc.php:377
+#: Dynroute.class.php:100
+#: functions.inc.php:379
 msgid "Delete"
 msgstr ""
 
-#: views/entries.php:40
+#: views/entries.php:47
 msgid "Delete this entry. Dont forget to click Submit to save changes!"
 msgstr ""
 
+#: functions.inc.php:379
 #: page.dynroute.php:53
 msgid "Description"
 msgstr ""
@@ -97,7 +102,7 @@ msgstr ""
 msgid "Description of this Dynamic Route"
 msgstr ""
 
-#: functions.inc.php:377
+#: functions.inc.php:379
 msgid "Destination"
 msgstr ""
 
@@ -113,7 +118,7 @@ msgid ""
 "Entries section below or if the lookup fails or returns an empty value."
 msgstr ""
 
-#: Dynroute.class.php:109
+#: Dynroute.class.php:110
 msgid "Duplicate"
 msgstr ""
 
@@ -162,15 +167,20 @@ msgstr ""
 msgid "Dynamic Route Saved Variables"
 msgstr ""
 
-#: functions.inc.php:472
-#: functions.inc.php:492
+#: functions.inc.php:474
+#: functions.inc.php:494
 #, php-format
 msgid "Dynamic Route: %s"
 msgstr ""
 
-#: functions.inc.php:438
+#: functions.inc.php:440
 #, php-format
 msgid "Dynamic Route: %s / Option: %s"
+msgstr ""
+
+#: dynroute.i18n.php:4
+#: dynroute.i18n.php:10
+msgid "Dynamic Routes"
 msgstr ""
 
 #: views/form.php:44
@@ -226,7 +236,7 @@ msgstr ""
 msgid "List Dynamc Routes"
 msgstr ""
 
-#: functions.inc.php:377
+#: functions.inc.php:379
 msgid "Match"
 msgstr ""
 
@@ -357,8 +367,17 @@ msgid ""
 "the same call"
 msgstr ""
 
-#: Dynroute.class.php:104
+#: Dynroute.class.php:105
 msgid "Reset"
+msgstr ""
+
+#: dynroute.i18n.php:8
+msgid ""
+"Routes calls based on dynamically calculated information that can be taken "
+"from a mysql database or via odbc with any supported database, from asterisk "
+"variables, from a url or an agi script. \t\tParameters to the lookups can "
+"combine dtmf input, asterisk variables, or values saved from previously "
+"executed dynamic routes on the same call."
 msgstr ""
 
 #: views/form.php:405
@@ -373,7 +392,7 @@ msgstr ""
 msgid "Source Type"
 msgstr ""
 
-#: Dynroute.class.php:114
+#: Dynroute.class.php:115
 msgid "Submit"
 msgstr ""
 
