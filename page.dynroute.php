@@ -49,7 +49,7 @@ if(!$astman){
 							 class="table table-striped">
 	    						<thead>
 	 								<tr>
-	        							<th data-sortable="true" data-field="name"><?php echo _("Dyname Route Name")?></th>
+	        							<th data-sortable="true" data-field="name"><?php echo _("Dynamic Route Name")?></th>
 									<th data-field="description"><?php echo _("Description")?></th>
 	        							<th class="col-md-2" data-field="link" data-formatter="actionFormatter"><?php echo _("Actions")?></th>
 	    							</tr>
