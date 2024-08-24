@@ -104,7 +104,7 @@ function dynroute_get_config($engine) {
 				{
 					$ext->add($c, 's', '', new ext_setvar('connid', ''));
                                 	$ext->add($c, 's', '', new ext_mysql_connect('connid', $dynroute['mysql_host'],  $dynroute['mysql_username'],  $dynroute['mysql_password'],  $dynroute['mysql_dbname']));
-					$ext->add($c, 's', '', new ext_gotoif('$["${connid}" = ""]',$id.',4,1'));
+					$ext->add($c, 's', '', new ext_gotoif('$["${connid}" = ""]',$c.',4,1'));
                                 	$ext->add($c, 's', '', new ext_mysql_query('resultid', 'connid', $query));
 					$ext->add($c, 's', '', new ext_gotoif('$["${resultid}" = ""]',$c.',4,1'));
                                 	$ext->add($c, 's', '', new ext_mysql_fetch('fetchid', 'resultid', 'dynroute')); 
